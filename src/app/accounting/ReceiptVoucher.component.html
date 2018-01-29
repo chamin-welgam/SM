@@ -1,0 +1,89 @@
+<div class="SM-form-top-menu row col-sm-12">  
+  <button nz-button [nzType]="'primary'" name="saveBtn" (click)="save()" >SAVE</button>
+</div>
+    
+<div class="SM-Form animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <form >
+          <div class="card-header">
+            <strong>Receipt Voucher</strong>
+          </div>
+          <div class="card-body">
+          
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Voucher No </label>  
+                <label class="col-sm-4"><strong>{{__VOUCHER_NO}} </strong></label> 
+                <button nz-button [nzShape]="circle" name="refresh__VOUCHER_NO" (click)="getNextVOUCHER_NO()">@</button>
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Date </label>  
+                <nz-datepicker class="col-sm-8" name="__VOUCHER_DATE" [(ngModel)]="__VOUCHER_DATE" ></nz-datepicker>
+            </div>
+            <div class="row" *ngIf="true">
+                <label class="col-sm-4"> Customer/Account</label> 
+                <nz-select 
+                class="col-sm-8"
+                [nzShowSearch]="true"
+                [nzMode]="combobox"
+                [(ngModel)]="__RECEIVED_BY_ACC_ID"
+                name="Selector_RECEIVED_BY_ACC_ID">
+                <nz-option
+                *ngFor=" let item of __listOfRECEIVED_BY_ACC_ID"
+                    [nzLabel]=item.c1  [nzValue]=item.c0>
+                </nz-option>
+                </nz-select>
+            </div>
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Amount </label>  
+                <nz-input-number class="col-sm-4" name="_AMOUNT" [(ngModel)]="__AMOUNT" ></nz-input-number> 
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">   </label>  
+                <nz-radio-group class="col-sm-8" name="SM_rb_IS_CASH_RECEIPT" [(ngModel)]="__IS_CASH_RECEIPT">
+                    <label nz-radio-button *ngFor="let data of __options_IS_CASH_RECEIPT" 
+                        [nzValue]= "data.value"><span>{{data.display}}</span></label>
+                </nz-radio-group>
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-4"> Receiced to Account</label> 
+                <nz-select 
+                class="col-sm-8"
+                [nzShowSearch]="true"
+                [nzMode]="combobox"
+                [(ngModel)]="__RECEIVED_TO_ACC_ID"
+                name="Selector_RECEIVED_TO_ACC_ID">
+                <nz-option
+                *ngFor=" let item of __listOfRECEIVED_TO_ACC_ID"
+                    [nzLabel]=item.c1  [nzValue]=item.c0>
+                </nz-option>
+                </nz-select>
+            </div>
+            <div class="row" *ngIf="__IS_CASH_RECEIPT==0">
+                <label class="col-sm-2">  Chque No </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_CHEQUE_NO"
+                [(ngModel)]="__CHEQUE_NO" ></nz-input> </div>
+            </div>                      
+
+            <div class="row" *ngIf="__IS_CASH_RECEIPT==0">
+                <label class="col-sm-2">  Cheque Date </label>  
+                <nz-datepicker class="col-sm-8" name="__CHEQUE_DATE" [(ngModel)]="__CHEQUE_DATE" ></nz-datepicker>
+            </div>
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Description </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_DESCRIPTION"
+                [(ngModel)]="__DESCRIPTION" ></nz-input> </div>
+            </div>                      
+
+          </div>    
+          <div class="card-footer">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

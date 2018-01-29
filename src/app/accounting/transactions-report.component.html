@@ -1,0 +1,98 @@
+<div class="oz-transRpt animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <form >
+          <div class="card-header">
+            <strong>Account Transactions</strong>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <label class="col-sm-2">Account</label>
+              <nz-select 
+                class="col-sm-10"
+                [nzShowSearch]="true"
+                [nzMode]="combobox"
+                [ngModel]="__accountID"
+                (ngModelChange)="selectedAccountChange($event)"
+                name="accountSelector">
+                <nz-option
+                *ngFor=" let account of __listOfAccounts"
+                    [nzLabel]=account.c1+account.c2  [nzValue]=account.c0>
+                </nz-option>
+              </nz-select>
+            </div>
+            <div class="row">
+              <label class="col-sm-2"> Date range</label>
+              <input class="col-sm-5" type="date" id="o-date1" name="date1" [ngModel]="__date1 | date:'yyyy-MM-dd'"   (ngModelChange)="onDate1Change($event)">
+              <input class="col-sm-5" type="date" id="o-date2" name="date2" [ngModel]="__date2 | date:'yyyy-MM-dd'"  (ngModelChange)="onDate2Change($event)">
+            </div>
+          </div>     
+          <div class="card-footer">
+              <button (click)="refreshData()" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Search</button>
+          </div>
+        </form>
+      </div>
+    </div><!--/.col-->
+  </div><!--/.row-->
+  <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <p class="">
+            Transactions of :: <strong>{{ __searchAccountName}} &emsp;</strong>  
+            Date:<strong>{{__searchDate1 | date:'dd-MM-yyyy'}} </strong>&emsp; 
+            <strong> {{__searchDate2 | date:'dd-MM-yyyy'}} </strong> &emsp;
+            Open : <strong>   {{__openBalance |number:'1.0-0'}} </strong> &emsp;
+            End : <strong>{{__endBalance | number :'1.0-0'}}</strong>
+            </p>
+          </div>
+          <nz-table #nzTable
+            [nzAjaxData]="__dataSet"
+            [nzShowSizeChanger]="true"
+            [nzLoading]="__loading"
+            [nzTotal]="__totalRecords"
+            [(nzPageIndex)]="__currentPage"
+            (nzPageIndexChange)="refreshData()"
+            [(nzPageSize)]="__pageSize"
+            (nzPageSizeChange)="refreshData(true)"
+            style="width:100%">
+            <thead nz-thead>
+            <tr>
+              <th nz-th>
+                <span>Date</span>
+                <nz-table-sort (nzValueChange)="sort('date',$event)"></nz-table-sort>
+              </th>
+              <th nz-th><span>Description</span>
+                <nz-table-sort (nzValueChange)="sort('Description', $event)"></nz-table-sort>
+              </th>
+              <th nz-th><span>Voucher No</span>
+                <nz-table-sort (nzValueChange)="sort('VoucherNo', $event)"></nz-table-sort>
+              </th>
+              <th nz-th><span>TransactionType</span>
+                <nz-table-sort (nzValueChange)="sort('TransactionType', $event)"></nz-table-sort>
+              </th>
+              <th nz-th style="text-align:right"><span >Amount</span>
+                <nz-table-sort (nzValueChange)="sort('Amount', $event)"></nz-table-sort>
+              </th>
+              <th nz-th style="display:none"><span>TransactionID</span></th>             
+              <th nz-th style="display:none"><span>RecordID</span></th>             
+            </tr>
+            </thead>
+            <tbody nz-tbody>
+              <tr nz-tbody-tr *ngFor="let data of nzTable.data">
+                <td nz-td>{{data.c2 | date:'dd-MM-yyyy'}}</td>
+                <td nz-td>{{data.c3}}</td>
+                <td nz-td>{{data.c4}}</td>
+                <td nz-td>{{data.c5}}</td>
+                <td nz-td style="text-align:right">{{data.c6 | number:0}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <div class="card-footer">
+            <button type="" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Print</button>
+          </div>
+        </div>
+      </div><!--/.col-->
+    </div><!--/.row-->
+  </div>

@@ -1,0 +1,15 @@
+{
+  "httpCallPath":"http://localhost:8000", 
+  
+  "dbConfig": {
+    "userName": "sa1",    
+    "password": "admin",
+    "server": "LENOVO-PC",
+    "options": {
+        "database": "olacdb",
+        "rowCollectionOnRequestCompletion": true,
+        "instanceName": "SQLEXPRESS2014"
+    }
+  }
+}
+

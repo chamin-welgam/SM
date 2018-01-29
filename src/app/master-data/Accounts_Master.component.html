@@ -1,0 +1,48 @@
+<div class="SM-form-top-menu row col-sm-12">  
+  <button nz-button [nzType]="'primary'" name="saveBtn" (click)="save()" >SAVE</button>
+</div>
+    
+<div class="SM-Form animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <form >
+          <div class="card-header">
+            <strong>Accounts Master</strong>
+          </div>
+          <div class="card-body">
+          
+            <div class="row" >
+                <label class="col-sm-2">  Code </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_AccCd"
+                [(ngModel)]="__AccCd" ></nz-input> </div>
+            </div>                      
+
+            <div class="row" >
+                <label class="col-sm-2">  Name </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_AccNm"
+                [(ngModel)]="__AccNm" ></nz-input> </div>
+            </div>                      
+
+            <div class="row" >
+                <label class="col-sm-4"> Parent Account</label> 
+                <nz-select 
+                class="col-sm-8"
+                [nzShowSearch]="true"
+                [nzMode]="combobox"
+                [(ngModel)]="__ParentAccID"
+                name="Selector_ParentAccID">
+                <nz-option
+                *ngFor=" let item of __listOfParentAccID"
+                    [nzLabel]=item.c1  [nzValue]=item.c0>
+                </nz-option>
+                </nz-select>
+            </div>
+          </div>    
+          <div class="card-footer">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

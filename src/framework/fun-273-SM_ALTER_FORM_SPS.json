@@ -1,0 +1,25 @@
+{
+    "fun_no":273,
+    "funName":"SM_ALTER_FORM_SPS",
+    "description":"alter table SPs , SP_INS , SP_DEL ...",
+    "parameters":["@FORM_NO"],
+    "steps":
+    [
+        {
+            "description":"alter INS sp; SM_ALTER_SP_INS= function number =259 ",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 259,
+                "parameters":
+                [
+                    {
+                        "para_nm":"FORM_NO",
+                        "para_value":"@FORM_NO"                    
+                    }
+                ],
+                "return_value_variable":"_v3"
+            }
+        }
+    ]
+}

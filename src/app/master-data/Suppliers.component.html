@@ -1,0 +1,114 @@
+<div class="SM-form-top-menu row col-sm-12">  
+  <button nz-button [nzType]="'primary'" name="saveBtn" (click)="save()" >SAVE</button>
+</div>
+    
+<div class="SM-Form animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <form >
+          <div class="card-header">
+            <strong>Suppliers</strong>
+          </div>
+          <div class="card-body">
+          
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Code </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_code"
+                [(ngModel)]="__code" ></nz-input> </div>
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Name </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_name"
+                [(ngModel)]="__name" ></nz-input> </div>
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Address </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_Address"
+                [(ngModel)]="__Address" ></nz-input> </div>
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-4"> District</label> 
+                <nz-select 
+                class="col-sm-8"
+                [nzShowSearch]="true"
+                [nzMode]="combobox"
+                [(ngModel)]="__District"
+                name="Selector_District">
+                <nz-option
+                *ngFor=" let item of __listOfDistrict"
+                    [nzLabel]=item.c1  [nzValue]=item.c0>
+                </nz-option>
+                </nz-select>
+            </div>
+            <div class="row" *ngIf="true">
+                <label class="col-sm-4"> Area</label> 
+                <nz-select 
+                class="col-sm-8"
+                [nzShowSearch]="true"
+                [nzMode]="combobox"
+                [(ngModel)]="__Area"
+                name="Selector_Area">
+                <nz-option
+                *ngFor=" let item of __listOfArea"
+                    [nzLabel]=item.c1  [nzValue]=item.c0>
+                </nz-option>
+                </nz-select>
+            </div>
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Tel </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_Tel"
+                [(ngModel)]="__Tel" ></nz-input> </div>
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Mobile </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_Mobile"
+                [(ngModel)]="__Mobile" ></nz-input> </div>
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  email </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_email"
+                [(ngModel)]="__email" ></nz-input> </div>
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-4"> Business Type</label> 
+                <nz-select 
+                class="col-sm-8"
+                [nzShowSearch]="true"
+                [nzMode]="combobox"
+                [(ngModel)]="__BusinessType"
+                name="Selector_BusinessType">
+                <nz-option
+                *ngFor=" let item of __listOfBusinessType"
+                    [nzLabel]=item.c1  [nzValue]=item.c0>
+                </nz-option>
+                </nz-select>
+            </div>
+            <div class="row" *ngIf="false">
+                <label class="col-sm-4"> AccountID</label> 
+                <nz-select 
+                class="col-sm-8"
+                [nzShowSearch]="true"
+                [nzMode]="combobox"
+                [(ngModel)]="__AccountID"
+                name="Selector_AccountID">
+                <nz-option
+                *ngFor=" let item of __listOfAccountID"
+                    [nzLabel]=item.c1  [nzValue]=item.c0>
+                </nz-option>
+                </nz-select>
+            </div>
+          </div>    
+          <div class="card-footer">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

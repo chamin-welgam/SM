@@ -1,0 +1,37 @@
+<div class="SM_VD_FormDesigner animated fadeIn">
+  <div class="row">
+    <div class="card col-sm-2 formControls">
+      <div class="card-header">
+        <strong>Controlls</strong>
+      </div>
+      <div class="card-body">
+        <button (click)="addTextControl()" class="btn btn-sm"><i class="fa fa-dot-circle-o"></i>TEXT</button>
+        <button (click)="addNumberControl()" class="btn btn-sm"><i class="fa fa-dot-circle-o"></i>NUMBER</button>
+        <button (click)="addDateControl()" class="btn btn-sm"><i class="fa fa-dot-circle-o"></i>DATE</button>
+        <button (click)="addDDEnumControl()" class="btn btn-sm"><i class="fa fa-dot-circle-o"></i>DROPDOWN ENUM</button>
+        <button (click)="save()" class="btn btn-sm"><i class="fa fa-dot-circle-o"></i>REFERENCE</button>
+      </div>
+      <div class="card-footer">
+      </div>
+    </div>
+    <div class="card col-sm-8 form">
+      <div class="card-header" (click)="formSeleted()" name="__form">
+          <strong>FORM</strong>
+      </div>
+      <div class="card-body">
+        <div id="formContents">
+        </div>
+      </div>
+    </div>
+    <div class="card col-sm-2 property">
+      <div class="card-header">
+        <strong>Property</strong>
+      </div>
+      <div class="card-body">
+        <router-outlet name="prop"></router-outlet>
+      </div>
+      <div class="card-footer">
+      </div>
+    </div>
+  </div><!--/.row-->
+</div>

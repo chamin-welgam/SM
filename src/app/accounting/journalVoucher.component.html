@@ -1,0 +1,89 @@
+<div class="aso-journalVoucher animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <form >
+          <div class="card-header">
+            <strong>Journal Voucher</strong>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="row">
+                  <label class="col-sm-4"> Voucher No </label>  
+                  <label class="col-sm-8"> <button nz-button [nzShape]="circle" name="refreshVoucherNo" (click)="getNextVoucherNumber()">@</button>
+                    <strong>{{__voucherNo}} </strong></label> 
+                </div>
+                <div class="row">
+                  <label class="col-sm-4"> Date</label>
+                  <nz-datepicker class="col-sm-8" name="vouDate" [(ngModel)]="__voucherDate"[nzSize]="'large'" ></nz-datepicker>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="row">
+                    <label class="col-sm-6"> Description </label>  
+                    <nz-input class="col-sm-6" name="_vchDesc" [(ngModel)]="__voucherDescription"
+                      [nzType]="textarea" [nzReadonly]="false">
+                    </nz-input> 
+                  </div>
+                </div>
+            </div>
+            <div class="row">
+              <nz-table #nzTable
+                [nzAjaxData]="__trans"
+                [nzShowSizeChanger]="false"
+                [nzLoading]="__loading"
+                [nzTotal]="__totalRecords"
+                [(nzPageIndex)]="__currentPage"
+                [(nzPageSize)]="__pageSize"
+                class="col-sm-12"
+                style="width:100%">
+                <thead nz-thead>
+                  <tr>
+                    <th nz-th width="30%"><span>Account</span></th>
+                    <th nz-th width="50%"><span>Description</span></th>
+                    <th nz-th width="10%">
+                      <div class="row"><span>DR Amt</span></div>
+                      <div class="row"><span>{{__drAmt}}</span></div>
+                    </th>
+                    <th nz-th width="10%">
+                      <div class="row"><span>CR Amt</span></div>
+                      <div class="row"><span>{{__crAmt}}</span></div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody nz-tbody>
+                  <tr nz-tbody-tr *ngFor="let rw of nzTable.data; let i = index">
+                    <td nz-td>
+                      <nz-select 
+                        [nzShowSearch]="true"
+                        [nzMode]="combobox"
+                        [(ngModel)]="rw.accID"
+                        name="drAccountSelector">
+                        <nz-option
+                        *ngFor=" let account of __listOfAccounts"
+                            [nzLabel]=account.c2   [nzValue]=account.c0>
+                        </nz-option>
+                      </nz-select>
+                    </td> 
+                    <td nz-td ><nz-input nztype="text" name="desc" [(ngModel)]="rw.des" ></nz-input></td> 
+                    <td nz-td >
+                      <nz-input-number name="drAmt" [ngModel]="rw.drAmt" (ngModelChange)="recalc($event, rw, 1, i)"
+                      [nzMin]="0" [nzMax]="999999"></nz-input-number> 
+                    </td>
+                    <td nz-td >
+                      <nz-input-number name="crAmt" [ngModel]="rw.crAmt" (ngModelChange)="recalc($event, rw, 0,i)"
+                      [nzMin]="0" [nzMax]="999999"></nz-input-number> 
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>  
+            </div>
+          </div>          
+          <div class="card-footer">
+            <button nz-button [nzType]="'primary'" name="saveBtn" (click)="save()" >SAVE</button>
+          </div>
+        </form>
+      </div>
+    </div><!--/.col-->
+  </div><!--/.row-->

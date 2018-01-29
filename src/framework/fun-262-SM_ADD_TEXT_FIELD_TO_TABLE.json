@@ -1,0 +1,97 @@
+{
+    "fun_no":262,
+    "funName":"SM_ADD_TEXT_FIELD_TO_TABLE",
+    "parameters":["FIELD_ID"],
+    "steps":
+    [
+        {
+            "description":"calling SP_SM_GET_FORM_FIELD, fun number 263",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 263,
+                "parameters":
+                [
+                    {
+                        "para_nm":"F_ID",
+                        "para_value":"@FIELD_ID"                    
+                    }
+                ],
+                "return_value_variable":"_FIELD"
+            }
+        },{
+            "description":"GET FORM RECORD TO GET INS_FUN NUMBER \n\r SP_SM_GET_FORM, fun number 264",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 264,
+                "parameters":
+                [
+                    {
+                        "para_nm":"FORM_NO",
+                        "para_value":"@_FIELD.rows[0].c7"                    
+                    }
+                ],
+                "return_value_variable":"_FORM"
+            }
+        },{
+            "description":"BUILD SQL",
+            "command_type": "javascript",
+            "script":  [
+                    "@_SQL=\"ALTER TABLE [DBO].[T_\"+@_FIELD.rows[0].c7+\"] \";",
+                    "@_SQL+=\"ADD [F_\"+@_FIELD.rows[0].c0+\"] VARCHAR(MAX) NULL\";",
+                    "if(@_FIELD.rows[0].c4==1){",
+                    "  @_IS_NOT_NULL=0;",
+                    "}else{",
+                    "  @_IS_NOT_NULL=1;",
+                    "}",
+                    "@_PARA_NAME=\"F_\"+@FIELD_ID;"
+                ]                
+         },{   
+            "description":"execute the alter table sql ;calling SP_SM_EXEC , fun number 261",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 261,
+                "parameters":
+                [
+                    {
+                        "para_nm":"SQL",
+                        "para_value":"@_SQL"
+                    }
+                ],
+                "return_value_variable":"_v1"
+            }
+        },{
+            "description":"insert into parameter to SP_INS; call SP_SM_INS_FUNCTION_INPUT_PARAMS ; fun no =19",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 19,
+                "parameters":
+                [
+                    {
+                        "para_nm":"NM",
+                        "para_value":"@_PARA_NAME"                    
+                    },{
+                        "para_nm":"SQL_DATATYPE",
+                        "para_value":"17"                    
+                    },{
+                        "para_nm":"LENGTH",
+                        "para_value":"0"                    
+                    },{
+                        "para_nm":"IS_NOT_NULL",
+                        "para_value":"@_IS_NOT_NULL"                    
+                    },{
+                        "para_nm":"SM_DATATYPE",
+                        "para_value":"23"                    
+                    },{
+                        "para_nm":"FUN_ID",
+                        "para_value":"@_FORM.rows[0].c3"                    
+                    }
+                ],
+                "return_value_variable":"_v2"
+            }
+       }
+    ]
+}

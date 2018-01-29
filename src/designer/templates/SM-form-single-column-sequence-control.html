@@ -1,0 +1,5 @@
+            <div class="row" %{visible}%>
+                <label class="col-sm-2"> %{label}% </label>  
+                <label class="col-sm-4"><strong>{{__%{fieldName}%}} </strong></label> 
+                <button nz-button [nzShape]="circle" name="refresh__%{fieldName}%" (click)="getNext%{fieldName}%()">@</button>
+            </div>                      

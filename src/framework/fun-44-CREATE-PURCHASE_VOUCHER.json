@@ -1,0 +1,156 @@
+{
+    "fun_no":44,
+    "funName":"CREATE_PURCHASE_VOUCHER",
+    "steps":
+    [
+        {   
+            "description":"get puchase tran type id",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 46,
+                "parameters":[],
+                "return_value_variable":"_TRN_TYPE_ID"
+            }
+        },{
+            "description":"get SUPPLIER account id",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 42,
+                "parameters":[
+                    {"para_nm":"SUPPLIER_ID",
+                    "para_value":"@SupplierID"    },
+                    {"para_nm":"SUPPLIER_CODE",
+                        "para_value":null    }],
+                "return_value_variable":"_SUP_Acc_ID"
+            }
+        },{
+            "description":"get PURCHASE account id",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 43,
+                "parameters":[],
+                "return_value_variable":"_PURCHASE_Acc_ID"
+            }
+        },{
+            "description":"create PURCHASE VOUCHER",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 41,
+                "parameters":
+                [
+                    {
+                        "para_nm":"VoucherDate",
+                        "para_value":"@VoucherDate"                    
+                    },{
+                        "para_nm":"VoucherNo",
+                        "para_value":"@VoucherNo"                    
+                    },{
+                        "para_nm":"BillNo",
+                        "para_value":"@BillNo"                    
+                    },{
+                        "para_nm":"SupplierID",
+                        "para_value":"@SupplierID"                    
+                    },{
+                        "para_nm":"TotalAmount",
+                        "para_value":"@TotalAmount"                    
+                    },{
+                        "para_nm":"ShopName",
+                        "para_value":"@ShopName"                    
+                    }
+                ],
+                "return_value_variable":"_PUR_ID"
+            }
+        },{
+            "description":"create dr transaction",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 32,
+                "parameters":
+                [
+                    {
+                        "para_nm":"date",
+                        "para_value":"@VoucherDate"                    
+                    },{
+                        "para_nm":"VoucherNo",
+                        "para_value":"@VoucherNo"                    
+                    },{
+                        "para_nm":"Description",
+                        "para_value":"'PURCHASE ::'+@VoucherNo"                    
+                    },{
+                        "para_nm":"AccountID",
+                        "para_value":"@_PURCHASE_Acc_ID"                    
+                    },{
+                        "para_nm":"Amount",
+                        "para_value":"@TotalAmount"                    
+                    },{
+                        "para_nm":"TranType",
+                        "para_value":"@_TRN_TYPE_ID"                    
+                    },{
+                        "para_nm":"TranID",
+                        "para_value":"@_PUR_ID"                    
+                    },{
+                        "para_nm":"SettledAmount",
+                        "para_value":"0"
+                    }
+                ],
+                "return_value_variable":"_DrTrnID"
+            }
+        },{
+            "description":"create cr transaction",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 32,
+                "parameters":
+                [
+                    {
+                        "para_nm":"date",
+                        "para_value":"@VoucherDate"                    
+                    },{
+                        "para_nm":"VoucherNo",
+                        "para_value":"@VoucherNo"                    
+                    },{
+                        "para_nm":"Description",
+                        "para_value":"'PURCHASE ::'+@VoucherNo"                    
+                    },{
+                        "para_nm":"AccountID",
+                        "para_value":"@_SUP_Acc_ID"                    
+                    },{
+                        "para_nm":"Amount",
+                        "para_value":"@TotalAmount*-1"                    
+                    },{
+                        "para_nm":"TranType",
+                        "para_value":"@_TRN_TYPE_ID"                    
+                    },{
+                        "para_nm":"TranID",
+                        "para_value":"@_PUR_ID"                    
+                    },{
+                        "para_nm":"SettledAmount",
+                        "para_value":0
+                    }
+                ],
+                "return_value_variable":"_CrTrnID"
+            }
+        },{
+            "description":"set new PUCHASE number",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 14,
+                "parameters":
+                [
+                    {
+                        "para_nm":"trn",
+                        "para_value":"\"PURCHASE\""
+                    }
+                ],
+                "return_value_variable":"_OK"
+            }
+        }
+    ]
+}

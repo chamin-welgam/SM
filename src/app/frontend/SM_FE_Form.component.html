@@ -1,0 +1,53 @@
+<div class="SM-form-top-menu row col-sm-12">  
+    <button nz-button [nzType]="'primary'" name="saveBtn" (click)="save()" >SAVE</button>
+  </div>
+<div class="SM_FE_Form animated fadeIn">
+  <div class="row">
+    <div class="card col-sm-8 form">
+      <div class="card-header" name="__form">
+        <strong>FORM</strong>
+      </div>
+      <div class="card-body">
+        <div id="formContents">
+          <div *ngFor=" let item of __fields">
+            <!-- TEXT FIELD -->
+            <div class="row" *ngIf="item.c2== TEXT_CONTROL" >
+              <label class="col-sm-2"> {{item.c3}}  </label>  
+              <div class="col-sm-4">
+                <nz-input nztype='text' name=item.c1
+                [(ngModel)]="__data['F_'+item.c0]"></nz-input> 
+              </div>
+            </div>     
+            <!-- Number FIELD -->
+            <div class="row" *ngIf="item.c2==  NUMBER_CONTROL" >
+              <label class="col-sm-2"> {{item.c3}}  </label>  
+              <div class="col-sm-4">
+                <nz-input-number nztype='number' name=item.c1
+                [(ngModel)]="__data['F_'+item.c0]"></nz-input-number> 
+              </div>
+            </div>     
+            <!-- Date FIELD -->
+            <div class="row" *ngIf="item.c2==DATE_CONTROL" >
+              <label class="col-sm-2"> {{item.c3}}  </label>  
+              <div class="col-sm-4">
+                <nz-datepicker nzShowTime="false"
+                [(ngModel)]="__data['F_'+item.c0]"></nz-datepicker> 
+              </div>
+            </div>     
+            <!-- DropDown Enum FIELD -->
+            <div class="row" *ngIf="item.c2==DDENUM_CONTROL" >
+              <label class="col-sm-2"> {{item.c3}}  </label>  
+              <div class="col-sm-4">
+                <SM-select-enum 
+                  class="col-sm-4"
+                  [MS_F_ID]="item.c0"
+                  [(ngModel)]="__data['F_'+item.c0]">
+                </SM-select-enum> 
+              </div>
+            </div>     
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!--/.row-->
+</div>

@@ -1,0 +1,77 @@
+{
+    "fun_no":29,
+    "funName":"CREATE_SUPPLIER",
+    "steps":
+    [
+        {   
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 31,
+                "parameters":[],
+                "return_value_variable":"_parentAccID"
+            }
+        },{
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 22,
+                "parameters":
+                [
+                    {
+                        "para_nm":"AccCd",
+                        "para_value":"@code"                    
+                    },{
+                        "para_nm":"AccNm",
+                        "para_value":"@name"                    
+                    },{
+                        "para_nm":"parentAccID",
+                        "para_value":"@_parentAccID"                    
+                    }
+                ],
+                "return_value_variable":"_AccID"
+            }
+        },{
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 28,
+                "parameters":
+                [
+                    {
+                        "para_nm":"code",
+                        "para_value":"@code"                    
+                    },{
+                        "para_nm":"name",
+                        "para_value":"@name"                    
+                    },{
+                        "para_nm":"Address",
+                        "para_value":"@Address"                    
+                    },{
+                        "para_nm":"District",
+                        "para_value":"@District"                    
+                    },{
+                        "para_nm":"Area",
+                        "para_value":"@Area"                    
+                    },{
+                        "para_nm":"Tel",
+                        "para_value":"@Tel"                    
+                    },{
+                        "para_nm":"Mobile",
+                        "para_value":"@Mobile"                    
+                    },{
+                        "para_nm":"email",
+                        "para_value":"@email"
+                    },{
+                        "para_nm":"BusinessType",
+                        "para_value":"@BusinessType"
+                    },{
+                        "para_nm":"AccountID",
+                        "para_value":"@_AccID"
+                    }
+                ],
+                "return_value_variable":"_SUPID"
+            }
+        }
+    ]
+}

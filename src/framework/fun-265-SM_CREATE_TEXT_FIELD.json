@@ -1,0 +1,76 @@
+{
+    "fun_no":265,
+    "funName":"SM_CREATE_TEXT_FIELD",
+    "parameters":["@FORM_NO"],
+    "steps":
+    [
+        {
+            "description":"constant for text control",
+            "command_type": "javascript",
+            "script":  ["@_TEXT_CONTROL=3824;"]
+        },{   
+            "description":" SM_ADD_FIELD_TO_FORM , fun number 274 ",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 274,
+                "parameters":
+                [
+                    {
+                        "para_nm":"FIELD_NAME",
+                        "para_value":"\"text_1\""                    
+                    },{
+                        "para_nm":"FIELD_TYPE",
+                        "para_value":"@_TEXT_CONTROL;"                    
+                    },{
+                        "para_nm":"DISPLAY_NAME",
+                        "para_value":"\"text_1\""                    
+                    },{
+                        "para_nm":"FORM_NO",
+                        "para_value":"@FORM_NO"                    
+                    },{
+                        "para_nm":"ALLOW_NULL",
+                        "para_value":"true"                    
+                    },{
+                        "para_nm":"SQL_TYPE",
+                        "para_value":"17"                    
+                    },{
+                        "para_nm":"FIELD_SQLDATA_TYPE",
+                        "para_value":"'VARCHAR(MAX)'"
+                    },{
+                        "para_nm":"SM_DATATYPE",
+                        "para_value":"23"
+                    }
+                    
+                ],
+                "return_value_variable":"_ID"
+            }
+        },{
+            "description":"_ID should be only id",
+            "command_type": "javascript",
+            "script":  ["@_ID=@_ID.rows[0].c0;"]
+        },{   
+            "description":"calling SP_SM_INS_TEXT_CONTROL function number =257 ",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 257,
+                "parameters":
+                [
+                    {
+                        "para_nm":"F_ID",
+                        "para_value":"@_ID"                    
+                    },{
+                        "para_nm":"F_LENGTH",
+                        "para_value":"100"                    
+                    }
+                ],
+                "return_value_variable":"_v1"
+            }
+        },{
+            "description":"this is always last step. returning text control id ",
+            "command_type": "return_single_value",
+            "return_value": "@_ID"
+        }
+    ]
+}

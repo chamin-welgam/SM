@@ -1,0 +1,7 @@
+            <div class="row" %{visible}%>
+                <label class="col-sm-2"> %{label}% </label>  
+                <nz-radio-group class="col-sm-8" name="SM_rb_%{fieldName}%" [(ngModel)]="__%{fieldName}%">
+                    <label nz-radio-button *ngFor="let data of __options_%{fieldName}%" 
+                        [nzValue]= "data.value"><span>{{data.display}}</span></label>
+                </nz-radio-group>
+            </div>                      

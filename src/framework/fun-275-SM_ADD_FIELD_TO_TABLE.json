@@ -1,0 +1,32 @@
+{
+    "fun_no":275,
+    "funName":"SM_ADD_FIELD_TO_TABLE",
+    "description":"add the field to SQL table",
+    "parameters":["FIELD_ID", "FIELD_SQLDATA_TYPE","FORM_NO"],
+    "steps":
+    [
+        {
+            "description":"BUILD SQL",
+            "command_type": "javascript",
+            "script":  [
+                "@_SQL=\"ALTER TABLE [DBO].[T_\"+@FORM_NO+\"] \";",
+                "@_SQL+=\"ADD [F_\"+@FIELD_ID+\"] \"+@FIELD_SQLDATA_TYPE+\" NULL\";"
+            ]                
+         },{   
+            "description":"execute the alter table sql ;calling SP_SM_EXEC , fun number 261",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 261,
+                "parameters":
+                [
+                    {
+                        "para_nm":"SQL",
+                        "para_value":"@_SQL"
+                    }
+                ],
+                "return_value_variable":"_v1"
+            }
+       }
+    ]
+}

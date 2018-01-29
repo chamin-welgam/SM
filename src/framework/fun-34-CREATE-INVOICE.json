@@ -1,0 +1,178 @@
+{
+    "fun_no":34,
+    "funName":"CREATE_INVOICE",
+    "steps":
+    [
+        {   
+            "description":"get invoice tran type id",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 35,
+                "parameters":[],
+                "return_value_variable":"_TRN_TYPE_ID"
+            }
+        },{
+            "description":"get customers account id",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 36,
+                "parameters":[
+                    {"para_nm":"CustomerID",
+                    "para_value":"@CustomerID"    },
+                    {"para_nm":"CustomerCode",
+                        "para_value":null    }],
+                "return_value_variable":"_Cus_Acc_ID"
+            }
+        },{
+            "description":"get sales account id",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 38,
+                "parameters":[],
+                "return_value_variable":"_sales_Acc_ID"
+            }
+        },{
+            "description":"if cancled then set canceledDate",
+            "command_type": "javascript",
+            "script":  ["if(@canceled==1){",
+                        "   @canceledDate=new Date();",
+                        "}else {",
+                        "   @canceledDate=null;",
+                        "   @canceledReason=null;}"]
+        },{
+            "description":"create invoice",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 33,
+                "parameters":
+                [
+                    {
+                        "para_nm":"Date",
+                        "para_value":"@Date"                    
+                    },{
+                        "para_nm":"InvoiceNo",
+                        "para_value":"@InvoiceNo"                    
+                    },{
+                        "para_nm":"manualInvNo",
+                        "para_value":"@manualInvNo"                    
+                    },{
+                        "para_nm":"CustomerID",
+                        "para_value":"@CustomerID"                    
+                    },{
+                        "para_nm":"Amount",
+                        "para_value":"@Amount"                    
+                    },{
+                        "para_nm":"canceled",
+                        "para_value":"@canceled"                    
+                    },{
+                        "para_nm":"canceledDate",
+                        "para_value":"@canceledDate"                    
+                    },{
+                        "para_nm":"canceledReason",
+                        "para_value":"@canceledReason"                    
+                    }
+                ],
+                "return_value_variable":"_invID"
+            }
+        },{
+            "description":"if not cancled create 2 transactions",
+            "command_type": "IF",
+            "if_condition":"@canceled!=1",
+            "if_then":
+            [   
+                {
+                    "description":"create dr transaction",
+                    "command_type": "call_a_function_and_get_return_value",
+                    "command_options":
+                    {
+                        "fun_no": 32,
+                        "parameters":
+                        [
+                            {
+                                "para_nm":"date",
+                                "para_value":"@Date"                    
+                            },{
+                                "para_nm":"VoucherNo",
+                                "para_value":"@InvoiceNo"                    
+                            },{
+                                "para_nm":"Description",
+                                "para_value":"'Invoice ::'+@InvoiceNo"                    
+                            },{
+                                "para_nm":"AccountID",
+                                "para_value":"@_Cus_Acc_ID"                    
+                            },{
+                                "para_nm":"Amount",
+                                "para_value":"@Amount"                    
+                            },{
+                                "para_nm":"TranType",
+                                "para_value":"@_TRN_TYPE_ID"                    
+                            },{
+                                "para_nm":"TranID",
+                                "para_value":"@_invID"                    
+                            },{
+                                "para_nm":"SettledAmount",
+                                "para_value":"0"
+                            }
+                        ],
+                        "return_value_variable":"_DrTrnID"
+                    }
+                },{
+                    "description":"create cr transaction",
+                    "command_type": "call_a_function_and_get_return_value",
+                    "command_options":
+                    {
+                        "fun_no": 32,
+                        "parameters":
+                        [
+                            {
+                                "para_nm":"date",
+                                "para_value":"@Date"                    
+                            },{
+                                "para_nm":"VoucherNo",
+                                "para_value":"@InvoiceNo"                    
+                            },{
+                                "para_nm":"Description",
+                                "para_value":"'Invoice ::'+@InvoiceNo"                    
+                            },{
+                                "para_nm":"AccountID",
+                                "para_value":"@_sales_Acc_ID"                    
+                            },{
+                                "para_nm":"Amount",
+                                "para_value":"@Amount*-1"                    
+                            },{
+                                "para_nm":"TranType",
+                                "para_value":"@_TRN_TYPE_ID"                    
+                            },{
+                                "para_nm":"TranID",
+                                "para_value":"@_invID"                    
+                            },{
+                                "para_nm":"SettledAmount",
+                                "para_value":0
+                            }
+                        ],
+                        "return_value_variable":"_CrTrnID"
+                    }
+                }
+            ]
+        },{
+            "description":"set new invoice number",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 14,
+                "parameters":
+                [
+                    {
+                        "para_nm":"trn",
+                        "para_value":"\"INVOICE\""                    
+                    }
+                ],
+                "return_value_variable":"_OK"
+            }
+        }
+    ]
+}

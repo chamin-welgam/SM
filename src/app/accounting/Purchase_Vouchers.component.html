@@ -1,0 +1,63 @@
+<div class="SM-form-top-menu row col-sm-12">  
+  <button nz-button [nzType]="'primary'" name="saveBtn" (click)="save()" >SAVE</button>
+</div>
+    
+<div class="SM-Form animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <form >
+          <div class="card-header">
+            <strong>Purchase Voucher</strong>
+          </div>
+          <div class="card-body">
+          
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Voucher No </label>  
+                <label class="col-sm-4"><strong>{{__VoucherNo}} </strong></label> 
+                <button nz-button [nzShape]="circle" name="refresh__VoucherNo" (click)="getNextVoucherNo()">@</button>
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Voucher Date </label>  
+                <nz-datepicker class="col-sm-8" name="__VoucherDate" [(ngModel)]="__VoucherDate" ></nz-datepicker>
+            </div>
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Amount </label>  
+                <nz-input-number class="col-sm-4" name="_TotalAmount" [(ngModel)]="__TotalAmount" ></nz-input-number> 
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-4"> Supplier Account</label> 
+                <nz-select 
+                class="col-sm-8"
+                [nzShowSearch]="true"
+                [nzMode]="combobox"
+                [(ngModel)]="__SupplierID"
+                name="Selector_SupplierID">
+                <nz-option
+                *ngFor=" let item of __listOfSupplierID"
+                    [nzLabel]=item.c1  [nzValue]=item.c0>
+                </nz-option>
+                </nz-select>
+            </div>
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Bill No </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_BillNo"
+                [(ngModel)]="__BillNo" ></nz-input> </div>
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Shop name </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_ShopName"
+                [(ngModel)]="__ShopName" ></nz-input> </div>
+            </div>                      
+
+          </div>    
+          <div class="card-footer">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

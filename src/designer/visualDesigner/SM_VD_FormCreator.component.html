@@ -1,0 +1,26 @@
+<div class="SM_VD_FormCreator animated fadeIn">
+  <div class="row">
+      <div class="card col-sm-12">
+      <form >
+        <div class="card-header">
+          <strong>Create new Form</strong>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <label class="col-sm-2"> Form Name</label>
+            <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_formName"
+              [(ngModel)]="__formName" ></nz-input> </div>
+          </div>
+          <div class="row">
+              <label class="col-sm-2"> Form Title</label>
+              <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="__title"
+                [(ngModel)]="__title" ></nz-input> </div>
+            </div>
+          </div>    
+        <div class="card-footer">
+            <button (click)="save()" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Create</button>
+        </div>
+      </form>
+    </div>
+  </div><!--/.col-->
+</div><!--/.row-->

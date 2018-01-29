@@ -1,0 +1,86 @@
+<div class="aso-chequesInHand animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <form >
+          <div class="card-header">
+            <strong>Cheques in Hand</strong>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <label class="col-sm-2"> Date range</label>
+              <input class="col-sm-5" type="date" id="o-date1" name="date1" [ngModel]="__searchDate1 | date:'yyyy-MM-dd'"  (ngModelChange)="onDate1Change($event)">
+              <input class="col-sm-5" type="date" id="o-date2" name="date2" [ngModel]="__searchDate2 | date:'yyyy-MM-dd'"  (ngModelChange)="onDate2Change($event)">
+            </div>
+            <div class="row">
+              <label class="col-sm-2">status</label>
+              <label nz-checkbox id="recStass" name="recStas"[ngModel]="__searchReceived"   (ngModelChange)="__searchReceived = $event;__searchCriteriaChanged=true" >Received</label>
+              <label nz-checkbox id="depoStass" name="depoStas"[ngModel]="__searchDeposit"   (ngModelChange)="__searchDeposit = $event;__searchCriteriaChanged=true" >Deposit</label>
+              <label nz-checkbox id="realStass" name="realStas"[ngModel]="__searchCleared"   (ngModelChange)="__searchCleared = $event;__searchCriteriaChanged=true" >cleared</label>
+              <label nz-checkbox id="retStass" name="retStas"[ngModel]="__searchReturned"   (ngModelChange)="__searchReturned = $event;__searchCriteriaChanged=true" >Returned</label>
+            </div> 
+          </div>    
+          <div class="card-footer">
+              <button (click)="refreshData()" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Search</button>
+          </div>
+        </form>
+      </div>
+    </div><!--/.col-->
+  </div><!--/.row-->
+  <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <p class="">
+            <strong>{{__filerOptions}} &emsp;</strong>  
+            </p>
+          </div>
+          <nz-table #nzTable
+            [nzAjaxData]="__dataSet"
+            [nzShowSizeChanger]="true"
+            [nzLoading]="__loading"
+            [nzTotal]="__totalRecords"
+            [(nzPageIndex)]="__currentPage"
+            (nzPageIndexChange)="refreshData()"
+            [(nzPageSize)]="__pageSize"
+            (nzPageSizeChange)="refreshData(true)">
+            <thead nz-thead>
+            <tr>
+              <th nz-th nzWidth="18%"><span>Customer</span><nz-table-sort (nzValueChange)="onSortChange('CustomerCode',$event)"></nz-table-sort></th>
+              <th nz-th nzWidth="10%"><span>Voucher</span><nz-table-sort (nzValueChange)="onSortChange('Voucher',$event)"></nz-table-sort></th>
+              <th nz-th nzWidth="5%"><span>Chq No.</span><nz-table-sort (nzValueChange)="onSortChange('ChqNo',$event)"></nz-table-sort></th>
+              <th nz-th nzWidth="5%"><span>Chq. Bank</span><nz-table-sort (nzValueChange)="onSortChange('ChqBankName',$event)"></nz-table-sort></th>
+              <th nz-th nzWidth="8%"><span>Chq. Amt</span><nz-table-sort (nzValueChange)="onSortChange('ChqAmount',$event)"></nz-table-sort></th>
+              <th nz-th nzWidth="8%"><span>Chq. Date</span><nz-table-sort (nzValueChange)="onSortChange('ChqDate',$event)"></nz-table-sort></th>
+              <th nz-th nzWidth="10%"><span>Status</span><nz-table-sort (nzValueChange)="onSortChange('Status',$event)"></nz-table-sort></th>
+              <th nz-th nzWidth="10%"><span>Bank Acc</span><nz-table-sort (nzValueChange)="onSortChange('BankAccount',$event)"></nz-table-sort></th>
+              <th nz-th nzWidth="8%"><span>Deposit</span><nz-table-sort (nzValueChange)="onSortChange('DepositDate',$event)"></nz-table-sort></th>
+              <th nz-th nzCheckbox="true" nzWidth="8%"><span>Cleared</span><nz-table-sort (nzValueChange)="onSortChange('ClearedDate',$event)"></nz-table-sort></th>
+              <th nz-th nzWidth="8%"><span>Returned</span><nz-table-sort (nzValueChange)="onSortChange('ReturnedDate',$event)"></nz-table-sort></th>
+              <th nz-th style="display:none"><span>ID</span></th>             
+            </tr>
+            </thead>
+            <tbody nz-tbody>
+              <tr nz-tbody-tr *ngFor="let data of nzTable.data">
+                <td nz-td>{{data.c9}}</td> 
+                <td nz-td>{{data.c10}}</td> 
+                <td nz-td>{{data.c1}}</td>
+                <td nz-td>{{data.c2}}</td>
+                <td nz-td style="text-align:right; padding-right:1%">{{data.c4 | number:0}}</td>
+                <td nz-td>{{data.c3 | date:'dd-MM-yyyy'}}</td>
+                <td nz-td>{{data.c5}}</td>
+                <td nz-td>{{data.c11}}</td>
+                <td nz-td>{{data.c6 | date:'dd-MM-yyyy'}}</td>
+                <td nz-td>{{data.c7 | date:'dd-MM-yyyy'}}</td>
+                <td nz-td>{{data.c8 | date:'dd-MM-yyyy'}}</td>
+                <td nz-td style="display:none">{{data.c0}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <div class="card-footer">
+            <button type="" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Print</button>
+          </div>
+        </div>
+      </div><!--/.col-->
+    </div><!--/.row-->
+  </div>

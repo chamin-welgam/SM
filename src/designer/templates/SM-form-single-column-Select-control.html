@@ -1,0 +1,14 @@
+            <div class="row" %{visible}%>
+                <label class="col-sm-4">%{label}%</label> 
+                <nz-select 
+                class="col-sm-8"
+                [nzShowSearch]="true"
+                [nzMode]="combobox"
+                [(ngModel)]="__%{fieldName}%"
+                name="Selector_%{fieldName}%">
+                <nz-option
+                *ngFor=" let item of __listOf%{fieldName}%"
+                    [nzLabel]=item.c1  [nzValue]=item.c0>
+                </nz-option>
+                </nz-select>
+            </div>

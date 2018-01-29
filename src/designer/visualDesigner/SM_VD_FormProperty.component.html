@@ -1,0 +1,19 @@
+<div class="SM_VD_FormProperty animated fadeIn">
+  <div class="row">
+    <strong>Form:</strong>
+  </div>
+  <div class="row">
+    <label class="col-sm-12"> Form Name</label>
+    <div class="col-sm-12" > <nz-input nztype='text' class="col-sm-2" name="_formName"
+      [(ngModel)]="__formName"
+      (change)="nameChanged()" >
+    </nz-input> </div>
+  </div>
+  <div class="row">
+    <label class="col-sm-12"> Form Title</label>
+    <div class="col-sm-12">
+      <nz-input nztype='text' class="col-sm-2" name="__title" 
+      [(ngModel)]="__title" (change)="titelChanged()"></nz-input> </div>
+  </div>    
+  <nz-alert id="__SM_msg" [nzType]="'success'" [nzShowIcon]="'true'" [nzCloseable]="'true'" nzMessage="SUCCESSFUL" [nzCloseText]="'X'"> </nz-alert>
+</div><!--/.row-->

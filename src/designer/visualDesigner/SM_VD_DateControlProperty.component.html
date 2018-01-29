@@ -1,0 +1,40 @@
+<div class="SM_VD_DateControlProperty animated fadeIn">
+  <div class="row">
+    <strong>Date CONTROL:</strong>
+  </div>
+  <div class="row">
+    <label class="col-sm-12"> Name</label>
+    <nz-input nztype='text' class="col-sm-12" name="__F_NAME"
+      [(ngModel)]="__F_NAME"
+      (change)="__F_NAME_Changed()" >
+    </nz-input>
+  </div>
+  <div class="row">
+    <label class="col-sm-12"> Label/Display Name </label>
+    <nz-input  class="col-sm-12" nztype='text' name="__F_DISPLAY_NAME " 
+        [(ngModel)]="__F_DISPLAY_NAME" (change)="__F_DISPLAY_NAME_Changed()">
+    </nz-input> 
+  </div>    
+  <div class="row">
+    <label class="col-sm-12">Allow NULL?</label>
+    <nz-radio-group class="col-sm-8" name="__F_ALLOW_NULL" 
+        [(ngModel)]="__F_ALLOW_NULL" (change)="__F_ALLOW_NULL_Changed()" >
+      <label nz-radio-button [nzValue]= "1"><span>YES</span></label>
+      <label nz-radio-button [nzValue]= "0"><span>NO</span></label>
+    </nz-radio-group>
+  </div>    
+  <div class="row">
+    <label class="col-sm-12">Min Date</label>
+    <nz-datepicker  class="col-sm-12" name="__F_MIN_DATE" 
+        [(ngModel)]="__F_MIN_DATE" (change)="__F_MIN_DATE_Changed()" (OnChanged)="__F_MIN_DATE_Changed()">
+    </nz-datepicker> 
+  </div>    
+  <div class="row">
+    <label class="col-sm-12">Max Date</label>
+    <nz-datepicker  class="col-sm-12" name="__F_MAX_DATE" 
+        [(ngModel)]="__F_MAX_DATE" (OnChanged)="__F_MAX_DATE_Changed()">
+    </nz-datepicker> 
+  </div>    
+  <nz-alert id="__SM_msg" [nzType]="'success'" [nzShowIcon]="'true'" [nzCloseable]="'true'" nzMessage="SUCCESSFUL" [nzCloseText]="'X'"> </nz-alert>
+</div><!--/.row-->
+

@@ -1,0 +1,75 @@
+<div class="SM-form-top-menu row col-sm-12">  
+  <button nz-button [nzType]="'primary'" name="saveBtn" (click)="save()" >SAVE</button>
+</div>
+    
+<div class="SM-Form animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <form >
+          <div class="card-header">
+            <strong>Invoice / Sales Voucher</strong>
+          </div>
+          <div class="card-body">
+          
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Date </label>  
+                <nz-datepicker class="col-sm-8" name="__Date" [(ngModel)]="__Date" ></nz-datepicker>
+            </div>
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Invoice No </label>  
+                <label class="col-sm-4"><strong>{{__InvoiceNo}} </strong></label> 
+                <button nz-button [nzShape]="circle" name="refresh__InvoiceNo" (click)="getNextInvoiceNo()">@</button>
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Manual Invoice No </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_manualInvNo"
+                [(ngModel)]="__manualInvNo" ></nz-input> </div>
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-4"> Customer</label> 
+                <nz-select 
+                class="col-sm-8"
+                [nzShowSearch]="true"
+                [nzMode]="combobox"
+                [(ngModel)]="__CustomerID"
+                name="Selector_CustomerID">
+                <nz-option
+                *ngFor=" let item of __listOfCustomerID"
+                    [nzLabel]=item.c1  [nzValue]=item.c0>
+                </nz-option>
+                </nz-select>
+            </div>
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">  Amount </label>  
+                <nz-input-number class="col-sm-4" name="_Amount" [(ngModel)]="__Amount" ></nz-input-number> 
+            </div>                      
+
+            <div class="row" *ngIf="true">
+                <label class="col-sm-2">   </label>  
+                <nz-radio-group class="col-sm-8" name="SM_rb_canceled" [(ngModel)]="__canceled">
+                    <label nz-radio-button *ngFor="let data of __options_canceled" 
+                        [nzValue]= "data.value"><span>{{data.display}}</span></label>
+                </nz-radio-group>
+            </div>                      
+
+            <div class="row" *ngIf="__canceled==1">
+                <label class="col-sm-2">  Cancled Date </label>  
+                <nz-datepicker class="col-sm-8" name="__canceledDate" [(ngModel)]="__canceledDate" ></nz-datepicker>
+            </div>
+            <div class="row" *ngIf="__canceled==1">
+                <label class="col-sm-2">  Reason </label>  
+                <div class="col-sm-4"> <nz-input nztype='text' class="col-sm-2" name="_canceledReason"
+                [(ngModel)]="__canceledReason" ></nz-input> </div>
+            </div>                      
+
+          </div>    
+          <div class="card-footer">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

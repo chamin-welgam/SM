@@ -1,0 +1,81 @@
+{
+    "fun_no":259,
+    "funName":"SM_ALTER_SP_INS",
+    "steps":
+    [
+        {
+            "description":"READ ALTER SP SQL ",
+            "command_type": "read_file",
+            "file_name":  "alterSP.sql",
+            "assign_to":"@_SP_INS"    
+        },{   
+            "description":"calling SP_SM_GET_FORM_FIELDS, fun number 260",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 260,
+                "parameters":
+                [
+                    {
+                        "para_nm":"F_FORM_NO",
+                        "para_value":"@FORM_NO"                    
+                    }
+                ],
+                "return_value_variable":"_FORM_FIELDS"
+            }
+        },{
+            "description":"DECLARE VARIABLE",
+            "command_type": "javascript",
+            "script":  [
+                    "@_parameters=\"\";",
+                    "@_FIELDS=\"\";",
+                    "@_VALUES=\"\";",
+                    "@__FORM_FIELDS"
+                ]
+            
+        },{
+            "description":"calling FOR_EACH loop through _FIELDS.ROWS ",
+            "command_type": "FOREACH",
+            "array":"@_FORM_FIELDS.rows",
+            "foreach_function":[
+                    "if (@SM_ITEM.c6.toLowerCase() == 'varchar'){",
+                    "  @_parameters+= \",/@F_\"+@SM_ITEM.c0 +\" \"+@SM_ITEM.c6+\"(MAX)\"; ",
+                    "}else { ",
+                    "  @_parameters+= \",/@F_\"+@SM_ITEM.c0 +\" \"+@SM_ITEM.c6; ",
+                    "}",
+                    "if(@SM_ITEM.c4 == 1){",
+                    "  @_parameters+= \"=null\";",
+                    "}",
+                    "@_FIELDS+= \",[F_\"+@SM_ITEM.c0 +\"]\"; ",
+                    "@_VALUES+= \",/@F_\"+@SM_ITEM.c0; "
+                ]
+        },{
+            "description":"finalize the parameters",
+            "command_type": "javascript",
+            "script":  [
+                    "@_parameters=@_parameters.substr(1); ",
+                    "@_FIELDS=@_FIELDS.substr(1); ",
+                    "@_VALUES=@_VALUES.substr(1); ",
+                    "@_SP_INS=@_SP_INS.replace(/%{formNo}%/g,@FORM_NO);  ",
+                    "@_SP_INS=@_SP_INS.replace(\"%{parameters}%\",@_parameters);  ",
+                    "@_SP_INS=@_SP_INS.replace(\"%{fields}%\",@_FIELDS);  ",
+                    "@_SP_INS=@_SP_INS.replace(\"%{values}%\",@_VALUES);  "
+                ]
+         },{   
+            "description":"calling SP_SM_EXEC, fun number 261",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 261,
+                "parameters":
+                [
+                    {
+                        "para_nm":"SQL",
+                        "para_value":"@_SP_INS"
+                    }
+                ],
+                "return_value_variable":"_v1"
+            }
+       }
+    ]
+}

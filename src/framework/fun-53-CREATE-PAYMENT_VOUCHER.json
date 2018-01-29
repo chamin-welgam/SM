@@ -1,0 +1,252 @@
+{
+    "fun_no":53,
+    "funName":"CREATE_PAYMENT_VOUCHER",
+    "steps":
+    [
+        {   
+            "description":"get PAYMENT tran type id",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 48,
+                "parameters":[],
+                "return_value_variable":"_TRN_TYPE_ID"
+            }
+        },{
+            "description":"if CASH then set CHEQUE NO,AMT AND BANK NULL",
+            "command_type": "javascript",
+            "script":  ["if(@IS_CHEQUE_PAYMENT==0){",
+                        "   @CHEQUE_NO=null;",
+                        "   @CHEQUE_DATE=null;",
+                        "}"]
+        },{
+            "description":"create PAYMENT VOUCHER ",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 47,
+                "parameters":
+                [
+                    {
+                        "para_nm":"VOUCHER_NO",
+                        "para_value":"@VOUCHER_NO"                    
+                    },{
+                        "para_nm":"VOUCHER_DATE",
+                        "para_value":"@VOUCHER_DATE"                    
+                    },{
+                        "para_nm":"PAID_TO_ACC_ID",
+                        "para_value":"@PAID_TO_ACC_ID"
+                    },{
+                        "para_nm":"AMOUNT",
+                        "para_value":"@AMOUNT"  
+                    },{
+                        "para_nm":"IS_CHEQUE_PAYMENT",
+                        "para_value":"@IS_CHEQUE_PAYMENT"                    
+                    },{
+                        "para_nm":"PAID_BY_ACC_ID",
+                        "para_value":"@PAID_BY_ACC_ID"
+                    },{
+                        "para_nm":"CHEQUE_NO",
+                        "para_value":"@CHEQUE_NO"
+                    },{
+                        "para_nm":"CHEQUE_DATE",
+                        "para_value":"@CHEQUE_DATE"
+                    },{
+                        "para_nm":"DESCRIPTION",
+                        "para_value":"@DESCRIPTION"
+                    }
+                ],
+                "return_value_variable":"_PAY_VOU_ID"
+            }
+        },{
+            "description":"create dr transaction",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 32,
+                "parameters":
+                [
+                    {
+                        "para_nm":"date",
+                        "para_value":"@VOUCHER_DATE"                    
+                    },{
+                        "para_nm":"VoucherNo",
+                        "para_value":"@VOUCHER_NO"                    
+                    },{
+                        "para_nm":"Description",
+                        "para_value":"'Payment Voucher ::'+@VOUCHER_NO+' '+ @DESCRIPTION"                    
+                    },{
+                        "para_nm":"AccountID",
+                        "para_value":"@PAID_TO_ACC_ID"                    
+                    },{
+                        "para_nm":"Amount",
+                        "para_value":"@AMOUNT"                    
+                    },{
+                        "para_nm":"TranType",
+                        "para_value":"@_TRN_TYPE_ID"                    
+                    },{
+                        "para_nm":"TranID",
+                        "para_value":"@_PAY_VOU_ID"                    
+                    },{
+                        "para_nm":"SettledAmount",
+                        "para_value":"0"
+                    }
+                ],
+                "return_value_variable":"_DrTrnID"
+            }
+        },{
+            "description":"if CHEQUES create ISSUED CHEQUE",
+            "command_type": "IF",
+            "if_condition":"@IS_CHEQUE_PAYMENT==1",
+            "if_then":
+            [   
+                {
+                    "description":"get CHEQUE ISSUE  type id",
+                    "command_type": "call_a_function_and_get_return_value",
+                    "command_options":
+                    {
+                        "fun_no": 52,
+                        "parameters":[],
+                        "return_value_variable":"_CHQ_TYPE_ID"
+                    }
+                },{
+                    "description":"get CHEQUE ISSUE ACC ID",
+                    "command_type": "call_a_function_and_get_return_value",
+                    "command_options":
+                    {
+                        "fun_no": 151,
+                        "parameters":[],
+                        "return_value_variable":"_CHQ_ISSUE_ACC_ID"
+                    }
+                },{
+                    "description":"create cr transaction",
+                    "command_type": "call_a_function_and_get_return_value",
+                    "command_options":
+                    {
+                        "fun_no": 32,
+                        "parameters":
+                        [
+                            {
+                                "para_nm":"date",
+                                "para_value":"@VOUCHER_DATE"                    
+                            },{
+                                "para_nm":"VoucherNo",
+                                "para_value":"@VOUCHER_NO"                    
+                            },{
+                                "para_nm":"Description",
+                                "para_value":"'Payment Voucher ::'+@VOUCHER_NO+' '+ @DESCRIPTION"                    
+                            },{
+                                "para_nm":"AccountID",
+                                "para_value":"@_CHQ_ISSUE_ACC_ID"
+                            },{
+                                "para_nm":"Amount",
+                                "para_value":"@AMOUNT*-1"                    
+                            },{
+                                "para_nm":"TranType",
+                                "para_value":"@_TRN_TYPE_ID"                    
+                            },{
+                                "para_nm":"TranID",
+                                "para_value":"@_PAY_VOU_ID"                    
+                            },{
+                                "para_nm":"SettledAmount",
+                                "para_value":"0"
+                            }
+                        ],
+                        "return_value_variable":"_CrTrnID"
+                    }
+                },{
+                    "description":"create create ISSUED CHEQUE",
+                    "command_type": "call_a_function_and_get_return_value",
+                    "command_options":
+                    {
+                        "fun_no": 51,
+                        "parameters":
+                        [
+                            {
+                                "para_nm":"BANK_ACC_ID",
+                                "para_value":"@PAID_BY_ACC_ID"                    
+                            },{
+                                "para_nm":"CHEQUE_NO",
+                                "para_value":"@CHEQUE_NO"                    
+                            },{
+                                "para_nm":"CHEQUE_DATE",
+                                "para_value":"@CHEQUE_DATE"                    
+                            },{
+                                "para_nm":"CHEQUE_AMOUNT",
+                                "para_value":"@AMOUNT"                    
+                            },{
+                                "para_nm":"STATUS",
+                                "para_value":"@_CHQ_TYPE_ID"                    
+                            },{
+                                "para_nm":"CLEARED_DATE",
+                                "para_value":"null"                    
+                            },{
+                                "para_nm":"RETURNED_DATE",
+                                "para_value":"null"                    
+                            },{
+                                "para_nm":"ACCOUNT_TRAN_ID",
+                                "para_value":"@_CrTrnID"
+                            }
+                        ],
+                        "return_value_variable":"_CHEQUE_ID"
+                    }
+                }
+            ],
+            "if_else":
+            [
+                {
+                    "description":"create cr transaction",
+                    "command_type": "call_a_function_and_get_return_value",
+                    "command_options":
+                    {
+                        "fun_no": 32,
+                        "parameters":
+                        [
+                            {
+                                "para_nm":"date",
+                                "para_value":"@VOUCHER_DATE"                    
+                            },{
+                                "para_nm":"VoucherNo",
+                                "para_value":"@VOUCHER_NO"                    
+                            },{
+                                "para_nm":"Description",
+                                "para_value":"'Payment Voucher ::'+@VOUCHER_NO+' '+ @DESCRIPTION"                    
+                            },{
+                                "para_nm":"AccountID",
+                                "para_value":"@PAID_BY_ACC_ID" 
+                            },{
+                                "para_nm":"Amount",
+                                "para_value":"@AMOUNT*-1"                    
+                            },{
+                                "para_nm":"TranType",
+                                "para_value":"@_TRN_TYPE_ID"                    
+                            },{
+                                "para_nm":"TranID",
+                                "para_value":"@_PAY_VOU_ID"                    
+                            },{
+                                "para_nm":"SettledAmount",
+                                "para_value":"0"
+                            }
+                        ],
+                        "return_value_variable":"_CrTrnID"
+                    }
+                }
+            ]
+        },{
+            "description":"set new PAYENT VOUCHER  number",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 14,
+                "parameters":
+                [
+                    {
+                        "para_nm":"trn",
+                        "para_value":"\"PAYMENT\""                    
+                    }
+                ],
+                "return_value_variable":"_OK"
+            }
+        }
+    ]
+}

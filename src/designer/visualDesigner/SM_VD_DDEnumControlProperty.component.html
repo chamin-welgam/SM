@@ -1,0 +1,46 @@
+<div class="SM_VD_DDEnumControlProperty animated fadeIn">
+  <div class="row">
+    <strong>Dropdown Values CONTROL:</strong>
+  </div>
+  <div class="row">
+    <label class="col-sm-12"> Name</label>
+    <nz-input nztype='text' class="col-sm-12" name="__F_NAME"
+      [(ngModel)]="__F_NAME"
+      (change)="__F_NAME_Changed()" >
+    </nz-input>
+  </div>
+  <div class="row">
+    <label class="col-sm-12"> Label/Display Name </label>
+    <nz-input  class="col-sm-12" nztype='text' name="__F_DISPLAY_NAME " 
+        [(ngModel)]="__F_DISPLAY_NAME" (change)="__F_DISPLAY_NAME_Changed()">
+    </nz-input> 
+  </div>    
+  <div class="row">
+    <label class="col-sm-12">Allow NULL?</label>
+    <nz-radio-group class="col-sm-8" name="__F_ALLOW_NULL" 
+        [(ngModel)]="__F_ALLOW_NULL"  (ngModelChange)="__F_ALLOW_NULL_Changed()" >
+      <label nz-radio-button [nzValue]= "1"><span>YES</span></label>
+      <label nz-radio-button [nzValue]= "0"><span>NO</span></label>
+    </nz-radio-group>
+  </div>    
+  <div class="row">
+    <label class="col-sm-12">Values Group</label>
+    <nz-select  class="col-sm-12" name="__F_ENUM_GROUPID" 
+      [(ngModel)]="__F_ENUM_GROUPID"  (ngModelChange)="__F_ENUM_GROUPID_Changed()">
+      <nz-option
+        *ngFor="let _item of __enumGropNames"
+        [nzLabel]=_item.c1  [nzValue]=_item.c0>
+      </nz-option>
+    </nz-select> 
+  </div>    
+  <div class="row">
+    <label class="col-sm-12">ALLOW ADD</label>
+    <nz-radio-group class="col-sm-8" name="__F_ALLOW_TO_ADD" 
+        [(ngModel)]="__F_ALLOW_TO_ADD" (ngModelChange)="__F_ALLOW_TO_ADD_Changed()" >
+      <label nz-radio-button [nzValue]= "1"><span>YES</span></label>
+      <label nz-radio-button [nzValue]= "0"><span>NO</span></label>
+    </nz-radio-group>
+  </div>    
+  <nz-alert id="__SM_msg" [nzType]="'success'" [nzShowIcon]="'true'" [nzCloseable]="'true'" nzMessage="SUCCESSFUL" [nzCloseText]="'X'"> </nz-alert>
+</div><!--/.row-->
+

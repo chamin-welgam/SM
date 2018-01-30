@@ -1,4 +1,4 @@
-ALTER PROCEDURE [DBO].[SP_INS_T_%{formNo}%] 
+ALTER PROCEDURE [DBO].[%{FuncName}%] 
 (
     %{parameters}%
 )

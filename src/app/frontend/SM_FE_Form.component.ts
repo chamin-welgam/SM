@@ -26,6 +26,7 @@ export class SM_FE_Form  implements OnInit {
   TEXT_CONTROL=3824;
   NUMBER_CONTROL=3825;
   DATE_CONTROL=3826;
+  DD_REFERENCE_CONTROL=3828;
   DDENUM_CONTROL=3829;
   //variables
   __formNo=31;
@@ -50,8 +51,6 @@ export class SM_FE_Form  implements OnInit {
     this.initForm();
   }
 
-  //functions for initializing lists 
-
   //function to initialize form / create new
   initForm(){
 
@@ -69,48 +68,14 @@ export class SM_FE_Form  implements OnInit {
           this.__data["F_"+_row.c0]=null;   //CREAte variables to hold form data
         });
         this.__fields=_data.rows;
-        this.getLists();
       }else{ //error //todo
         alert("Error \nwhile creating controls");
       }  
     }
   }
 
-  __IndexNo=0;
-  __F_ID=0;
-  __lists={};
-  getLists(){
-    if(this.__IndexNo>=this.__fields.length)
-      return;
-    if(this.__fields[this.__IndexNo].c2==this.DDENUM_CONTROL){
-      this.__F_ID= this.__fields[this.__IndexNo].c0;
-      var _data={
-        enumGrpID: 111
-      };
-      this.callFunction(9,_data, this.onListData.bind(this))
-    } else {
-      this.__IndexNo++;
-      this.getLists();
-    }
-  }
-
-  onListData(_data){
-    if(_data.status=='OK'){
-      this.__lists["F_"+this.__F_ID ]=_data.rows;
-    }
-    this.__IndexNo++;
-    this.getLists();
-  }
-
-
   callFunction(_funNo, _data, _callBackFunc){
     this.__SM_webUtilities.callAPIFunction(_funNo, _data,_callBackFunc, this.__http);
-   /*  var _url= (<any>AppConfig).httpCallPath+"/api/function";
-      
-    var _params = new HttpParams()
-      .append('funNo', `${_funNo}`)
-      .append('data', `${JSON.stringify(_data)}`);
-    this.__http.get(`${_url}`,{params: _params}).subscribe((data : any) => _callBackFunc(data));   */
   }
 
   //function to save save / save button click

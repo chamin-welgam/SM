@@ -48,7 +48,7 @@ export class SM_select_enum_Component implements ControlValueAccessor  {
   __disabled=false;
 
   @Input()
-  set MS_F_ID(value : number){
+  set SM_F_ID(value : number){
     if (value>0){
       this.__F_ID= value;
       // get field properties
@@ -79,7 +79,7 @@ export class SM_select_enum_Component implements ControlValueAccessor  {
     }
   }
 
-  get MS_F_ID() {
+  get SM_F_ID() {
     return this.__F_ID;
   }
 // functions

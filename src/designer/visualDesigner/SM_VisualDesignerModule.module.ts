@@ -37,6 +37,7 @@ import { SM_VD_TextControlPropertyComponent } from './SM_VD_TextControlProperty.
 import { SM_VD_NumberControlPropertyComponent } from './SM_VD_NumberControlProperty.component';
 import { SM_VD_DateControlPropertyComponent } from './SM_VD_DateControlProperty.component';
 import { SM_VD_DDEnumControlPropertyComponent } from './SM_VD_DDEnumControlProperty.component';
+import { SM_VD_DDReferenceControlPropertyComponent } from './SM_VD_DDReferenceControlProperty.component';
 
 @NgModule({
   imports: [
@@ -57,6 +58,7 @@ import { SM_VD_DDEnumControlPropertyComponent } from './SM_VD_DDEnumControlPrope
     ,SM_VD_NumberControlPropertyComponent
     ,SM_VD_DateControlPropertyComponent
     ,SM_VD_DDEnumControlPropertyComponent
+    ,SM_VD_DDReferenceControlPropertyComponent
 
   ],
   providers   : [

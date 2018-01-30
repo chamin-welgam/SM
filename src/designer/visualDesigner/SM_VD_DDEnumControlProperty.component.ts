@@ -107,7 +107,7 @@ export class SM_VD_DDEnumControlPropertyComponent  implements OnInit {
     this.UpdateProperty(null,null,null,this.__F_ENUM_GROUPID);
   }
   __F_ALLOW_TO_ADD_Changed(){
-    this.UpdateProperty(null,null,null,null,this.__F_ALLOW_NULL);
+    this.UpdateProperty(null,null,null,null,this.__F_ALLOW_TO_ADD);
   }
 
   //functions during the web activities

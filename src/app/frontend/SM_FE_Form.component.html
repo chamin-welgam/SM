@@ -40,9 +40,20 @@
               <div class="col-sm-4">
                 <SM-select-enum 
                   class="col-sm-4"
-                  [MS_F_ID]="item.c0"
+                  [SM_F_ID]="item.c0"
                   [(ngModel)]="__data['F_'+item.c0]">
                 </SM-select-enum> 
+              </div>
+            </div>     
+            <!-- DropDown reference FIELD -->
+            <div class="row" *ngIf="item.c2==DD_REFERENCE_CONTROL" >
+              <label class="col-sm-2"> {{item.c3}}  </label>  
+              <div class="col-sm-4">
+                <SM-select-reference 
+                  class="col-sm-4"
+                  [SM_F_ID]="item.c0"
+                  [(ngModel)]="__data['F_'+item.c0]">
+                </SM-select-reference> 
               </div>
             </div>     
           </div>

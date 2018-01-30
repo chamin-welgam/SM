@@ -9,6 +9,7 @@ import {
 import { Router, ActivatedRoute  } from '@angular/router';
 import { HttpClient, HttpParams} from '@angular/common/http';
 import * as  AppConfig from  '../../app/configuration/config.json';
+import { SM_webUtilities } from '../../webUtilities/SM_webUtilities' 
 import { now } from 'moment';
 
 @Component({
@@ -25,12 +26,14 @@ export class SM_VD_FormDesignerComponent  implements OnInit {
   TEXT_CONTROL=3824;
   NUMBER_CONTROL=3825;
   DATE_CONTROL=3826;
+  DD_REFERENCE_CONTROL=3828;
   DDENUM_CONTROL=3829;
   //variables
   __formNo=0;
   __formName="";
   __title="";
   __el: HTMLElement;
+  __SMWU = new SM_webUtilities(this.__http);
   
   constructor(private el: ElementRef, private __http: HttpClient, private __activatedRoute: ActivatedRoute ,
               private __router :Router) {
@@ -71,10 +74,12 @@ export class SM_VD_FormDesignerComponent  implements OnInit {
             this.addDateFieldToScreen(_row);
           } else if(_row.c2== this.DDENUM_CONTROL){
             this.addDDEnumFieldToScreen(_row);
-          }          
+          } else if(_row.c2== this.DD_REFERENCE_CONTROL){
+            this.addDDReferenceFieldToScreen(_row);
+          }       
         });
       }else{ //error //todo
-        alert("Error \nwhile creating text control");
+        alert("Error \nwhile creating  control");
       }  
     }
   }
@@ -123,6 +128,17 @@ export class SM_VD_FormDesignerComponent  implements OnInit {
     if (_select) newEle.click();
   }
 
+  addDDReferenceFieldToScreen(_data, _select){
+    var newEle =  document.createElement("div");
+    newEle.innerText = _data.c3;
+    newEle.id="__DDreference"+_data.c0;
+    newEle.addEventListener("click",
+        ()=>{this.controlSeleted(this.DD_REFERENCE_CONTROL, _data.c0)}, false);
+    var target = document.getElementById('formContents');
+    target.appendChild(newEle);
+    if (_select) newEle.click();
+  }
+
   formSeleted()
   {
     // this.__router.navigate(['/designer/formDesigner/formNo/31']);
@@ -139,6 +155,8 @@ export class SM_VD_FormDesignerComponent  implements OnInit {
       this.__router.navigate(['/designer/formDesigner',{outlets: {prop: ['DateControl',_ID]}}]);
     }else if(_type==this.DDENUM_CONTROL){   //DropDown control
       this.__router.navigate(['/designer/formDesigner',{outlets: {prop: ['DDEnumControl',_ID]}}]);
+    }else if(_type==this.DD_REFERENCE_CONTROL){   //DropDown REFERENCE control
+      this.__router.navigate(['/designer/formDesigner',{outlets: {prop: ['DDReferenceControl',_ID]}}]);
     }
   }
   
@@ -214,13 +232,26 @@ export class SM_VD_FormDesignerComponent  implements OnInit {
     }
   } 
 
+  addDDReferenceControl(){
+    var _data={
+      FORM_NO: this.__formNo
+    };
+    var _ID=0;
+    //calling function SM CREATE DD reference control = 292
+    this.callFunction(292,_data, addControlStep2.bind(this))
+
+    function addControlStep2(_data)
+    {
+      if(_data.status=='OK'){
+        this.addDDReferenceFieldToScreen(_data.rows[0], true);
+      }else{ //error //todo
+        alert("Error \nwhile creating control");
+      }  
+    }
+  } 
+
   callFunction(_funNo, _data, _callBackFunc){
-    var _url= (<any>AppConfig).httpCallPath+"/api/function";
-      
-    var _params = new HttpParams()
-      .append('funNo', `${_funNo}`)
-      .append('data', `${JSON.stringify(_data)}`);
-    this.__http.get(`${_url}`,{params: _params}).subscribe((data : any) => _callBackFunc(data));  
+    this.__SMWU.callAPIFunction(_funNo,_data,_callBackFunc);
   }
 
   //function to save save / save button click

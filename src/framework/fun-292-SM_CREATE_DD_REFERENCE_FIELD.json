@@ -1,0 +1,78 @@
+{
+    "fun_no":292,
+    "funName":"SM_CREATE_DD_REFERENCE FIELD",
+    "parameters":["@FORM_NO"],
+    "steps":
+    [
+        {
+            "description":"constant for DROPDOWN REERENCE control",
+            "command_type": "javascript",
+            "script":  ["@_CONTROL_ID=3828;"]
+        },{   
+            "description":" SM_ADD_FIELD_TO_FORM , fun number 274 ",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 274,
+                "parameters":
+                [
+                    {
+                        "para_nm":"FIELD_NAME",
+                        "para_value":"\"REFERENCE_1\""                    
+                    },{
+                        "para_nm":"FIELD_TYPE",
+                        "para_value":"@_CONTROL_ID;"  
+                    },{
+                        "para_nm":"DISPLAY_NAME",
+                        "para_value":"\"REFERENCE 1\"" 
+                    },{
+                        "para_nm":"FORM_NO",
+                        "para_value":"@FORM_NO"                    
+                    },{
+                        "para_nm":"ALLOW_NULL",
+                        "para_value":"true"                    
+                    },{
+                        "para_nm":"SQL_TYPE",
+                        "para_value":"5"
+                    },{
+                        "para_nm":"FIELD_SQLDATA_TYPE",
+                        "para_value":"'INT'"
+                    },{
+                        "para_nm":"SM_DATATYPE",
+                        "para_value":"24"
+                    }
+                ],
+                "return_value_variable":"_ID"
+            }
+        },{
+            "description":"_ID should be only id",
+            "command_type": "javascript",
+            "script":  ["@_ID=@_ID.rows[0].c0;"]
+        },{   
+            "description":"calling SP_SM_INS_DD_REFERENCE_FIELD function number =290",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 290,
+                "parameters":
+                [
+                    {
+                        "para_nm":"F_ID",
+                        "para_value":"@_ID"                    
+                    },{
+                        "para_nm":"F_REF_FORMNO",
+                        "para_value":"31"
+                    },{
+                        "para_nm":"F_REF_FIELDNO",
+                        "para_value":"1"
+                    }
+                ],
+                "return_value_variable":"_v1"
+            }
+        },{
+            "description": "this is always last step. returning text control id",
+            "command_type": "return_single_value",
+            "return_value": "@_ID"
+        }
+    ]
+}

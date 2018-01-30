@@ -9,6 +9,36 @@
             "file_name":  "alterSP.sql",
             "assign_to":"@_SP_INS"    
         },{   
+            "description":"calling SM GET_FORM, fun number 264",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 264,
+                "parameters":
+                [
+                    {
+                        "para_nm":"FORM_NO",
+                        "para_value":"@FORM_NO"                    
+                    }
+                ],
+                "return_value_variable":"_FORM_DATA"
+            }
+        },{   
+            "description":"GET function name, calling GET FUNCTION RECORD :fun number 293",
+            "command_type": "call_a_function_and_get_return_value",
+            "command_options":
+            {
+                "fun_no": 293,
+                "parameters":
+                [
+                    {
+                        "para_nm":"ID",
+                        "para_value":"@_FORM_DATA.rows[0].c3"                    
+                    }
+                ],
+                "return_value_variable":"_FUNC_DATA"
+            }
+        },{   
             "description":"calling SP_SM_GET_FORM_FIELDS, fun number 260",
             "command_type": "call_a_function_and_get_return_value",
             "command_options":
@@ -27,6 +57,7 @@
             "description":"DECLARE VARIABLE",
             "command_type": "javascript",
             "script":  [
+                    "@_INS_FUNC_NAME = @_FUNC_DATA.rows[0].c4;",
                     "@_parameters=\"\";",
                     "@_FIELDS=\"\";",
                     "@_VALUES=\"\";",
@@ -59,7 +90,8 @@
                     "@_SP_INS=@_SP_INS.replace(/%{formNo}%/g,@FORM_NO);  ",
                     "@_SP_INS=@_SP_INS.replace(\"%{parameters}%\",@_parameters);  ",
                     "@_SP_INS=@_SP_INS.replace(\"%{fields}%\",@_FIELDS);  ",
-                    "@_SP_INS=@_SP_INS.replace(\"%{values}%\",@_VALUES);  "
+                    "@_SP_INS=@_SP_INS.replace(\"%{values}%\",@_VALUES);  ",
+                    "@_SP_INS=@_SP_INS.replace(\"%{FuncName}%\",@_INS_FUNC_NAME);  "
                 ]
          },{   
             "description":"calling SP_SM_EXEC, fun number 261",

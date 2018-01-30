@@ -16,12 +16,13 @@ import { SM_VD_TextControlPropertyComponent } from './SM_VD_TextControlProperty.
 import { SM_VD_NumberControlPropertyComponent } from './SM_VD_NumberControlProperty.component';
 import { SM_VD_DateControlPropertyComponent } from './SM_VD_DateControlProperty.component';
 import { SM_VD_DDEnumControlPropertyComponent } from './SM_VD_DDEnumControlProperty.component';
+import { SM_VD_DDReferenceControlPropertyComponent } from './SM_VD_DDReferenceControlProperty.component';
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'formDesigner',
+        path: 'formDesigner/:formNo',
         component: SM_VD_FormDesignerComponent,
         children:[
           { path: 'formNo/:formNo',  
@@ -38,6 +39,9 @@ const routes: Routes = [
             outlet: 'prop'},
           { path: 'DDEnumControl/:controlID',  
             component: SM_VD_DDEnumControlPropertyComponent,
+            outlet: 'prop'},
+          { path: 'DDReferenceControl/:controlID',  
+            component: SM_VD_DDReferenceControlPropertyComponent,
             outlet: 'prop'}
         ] 
       },{

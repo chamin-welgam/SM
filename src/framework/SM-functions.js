@@ -156,7 +156,7 @@ class SM_functions extends baseSendData{
         var _error=false;
         if (responseObj.status=='OK'){
           // get query details
-          __funName= responseObj.rows[0].c0;  //F_NM
+          __funName= responseObj.rows[0].c2;  //F_filename
           __funType = responseObj.rows[0].c1; //F_TYPE
           if (__funType==FUNCTION_TYPE_STORED_PROCEDURE){     //
             console.log('__funType', __funType);

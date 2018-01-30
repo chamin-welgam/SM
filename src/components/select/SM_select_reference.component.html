@@ -1,0 +1,14 @@
+<nz-select 
+  class="col-sm-12"
+  [nzShowSearch]="true"
+  [nzMode]="combobox"
+  [nzAllowClear]="true"
+  [nzKeepUnListOptions]="true"
+  [(ngModel)]="__value"
+  (ngModelChange)="onChange()"
+  name="DDReference">
+  <nz-option
+  *ngFor="let _item of __items"
+      [nzLabel]=_item.c1  [nzValue]=_item.c0>
+  </nz-option>
+</nz-select> 

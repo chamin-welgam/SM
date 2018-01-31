@@ -19,12 +19,19 @@ import { SM_VD_DDEnumControlPropertyComponent } from './SM_VD_DDEnumControlPrope
 import { SM_VD_DDReferenceControlPropertyComponent } from './SM_VD_DDReferenceControlProperty.component';
 const routes: Routes = [
   {
-    path: '',
-    children: [
-      {
-        path: 'formDesigner/:formNo',
+    path:'forms',
+    component: SM_VD_FormCreatorComponent
+  },
+  {
+    path: 'forms',
+    children:[
+      { 
+        path: ':id',
         component: SM_VD_FormDesignerComponent,
         children:[
+          { path: 'formNo/:id',
+            component: SM_VD_FormPropertyComponent,
+            outlet: 'prop'},
           { path: 'formNo/:formNo',  
             component: SM_VD_FormPropertyComponent,
             outlet: 'prop'},
@@ -42,11 +49,7 @@ const routes: Routes = [
             outlet: 'prop'},
           { path: 'DDReferenceControl/:controlID',  
             component: SM_VD_DDReferenceControlPropertyComponent,
-            outlet: 'prop'}
-        ] 
-      },{
-        path: 'newForm',
-        component: SM_VD_FormCreatorComponent
+            outlet: 'prop'}         ]
       }
     ]
   }

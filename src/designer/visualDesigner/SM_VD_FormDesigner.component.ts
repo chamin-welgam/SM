@@ -38,13 +38,10 @@ export class SM_VD_FormDesignerComponent  implements OnInit {
   constructor(private el: ElementRef, private __http: HttpClient, private __activatedRoute: ActivatedRoute ,
               private __router :Router) {
     this.__el = this.el.nativeElement;
-    this.__activatedRoute.queryParams.subscribe(params => {
-      this.__formNo= params['formNo'];
-    });
+    this.__formNo= this.__activatedRoute.params.value.id;
   }
 
   ngOnInit() {
-    this.__formNo=this.__activatedRoute.snapshot.params['formNo'];
     console.log(this.__router);
     this.initForm();
   }
@@ -142,21 +139,23 @@ export class SM_VD_FormDesignerComponent  implements OnInit {
   formSeleted()
   {
     // this.__router.navigate(['/designer/formDesigner/formNo/31']);
-    this.__router.navigate(['/designer/formDesigner',{outlets: {prop: ['formNo',this.__formNo]}}]);
+//    this.__router.navigate(['/designer/formDesigner',{outlets: {prop: ['formNo',this.__formNo]}}]);
+    this.__router.navigate([ {outlets: {'prop': ['formNo',this.__formNo]}}],{relativeTo:this.__activatedRoute});
   }
 
   controlSeleted(_type, _ID)
   {
     if(_type==this.TEXT_CONTROL)  { //text control
-      this.__router.navigate(['/designer/formDesigner',{outlets: {prop: ['TextControl',_ID]}}]);
+      this.__router.navigate([{outlets: {prop: ['TextControl',_ID]}}],{relativeTo:this.__activatedRoute});
+//      this.__router.navigate(['/designer/formDesigner',{outlets: {prop: ['TextControl',_ID]}}]);
     }else if(_type==this.NUMBER_CONTROL){   //number control
-      this.__router.navigate(['/designer/formDesigner',{outlets: {prop: ['NumberControl',_ID]}}]);
+      this.__router.navigate([{outlets: {prop: ['NumberControl',_ID]}}],{relativeTo:this.__activatedRoute});
     }else if(_type==this.DATE_CONTROL){   //date control
-      this.__router.navigate(['/designer/formDesigner',{outlets: {prop: ['DateControl',_ID]}}]);
+      this.__router.navigate([{outlets: {prop: ['DateControl',_ID]}}],{relativeTo:this.__activatedRoute});
     }else if(_type==this.DDENUM_CONTROL){   //DropDown control
-      this.__router.navigate(['/designer/formDesigner',{outlets: {prop: ['DDEnumControl',_ID]}}]);
+      this.__router.navigate([{outlets: {prop: ['DDEnumControl',_ID]}}],{relativeTo:this.__activatedRoute});
     }else if(_type==this.DD_REFERENCE_CONTROL){   //DropDown REFERENCE control
-      this.__router.navigate(['/designer/formDesigner',{outlets: {prop: ['DDReferenceControl',_ID]}}]);
+      this.__router.navigate([{outlets: {prop: ['DDReferenceControl',_ID]}}], {relativeTo:this.__activatedRoute});
     }
   }
   

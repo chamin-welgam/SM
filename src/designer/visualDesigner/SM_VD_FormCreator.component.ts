@@ -6,7 +6,7 @@ import {
   Component, 
   OnInit 
 } from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import { HttpClient, HttpParams} from '@angular/common/http';
 import * as  AppConfig from  '../../app/configuration/config.json';
 import { SM_webUtilities } from '../../webUtilities/SM_webUtilities';
@@ -24,21 +24,44 @@ import { now } from 'moment';
 
 export class SM_VD_FormCreatorComponent  implements OnInit {
   //variables
-  __formName="";
-  __title="";
   __el: HTMLElement;
   __SMWU = new SM_webUtilities(this.__http);
-  
-  constructor(private el: ElementRef, private __http: HttpClient, private __router: Router) {
+  //new form variables
+  __formName="";  
+  __title="";
+  //form names table's variables
+  __currentPage = 1;
+  __pageSize = 10;
+  __totalPages = 1;
+  __totalRecords=1000;
+  __dataSet = [];
+  __loading = false;
+  __searchFormName="";
+  __sortDirection=1;
+    
+  constructor(private el: ElementRef, private __http: HttpClient, private __router: Router, 
+      private __route: ActivatedRoute) {
     this.__el = this.el.nativeElement;
   }
 
   ngOnInit() {
     this.newFormData();
+    //get list of form names
+    var _data={};
+    var _callBack_fun = onReturnData.bind(this);
+    this.__SMWU.callAPIFunction(295, _data, _callBack_fun);    
+    
+    function onReturnData(_data) {
+      if(_data.status=='OK'){
+        this.__dataSet= _data.rows;
+        this.__totalRecords= _data.rows.length;
+        this.__totalPages = Math.ceil( this.__totalRecords/this.__pageSize );
+      }else{ //error //todo
+        alert("Error \nwhile creating control");
+      }  
+    }        
     console.log(this.__router);
   }
-
-  //functions for initializing lists 
 
   //function to initialize form / create new
   newFormData(){
@@ -46,6 +69,25 @@ export class SM_VD_FormCreatorComponent  implements OnInit {
     this.__title="";
   }
 
+  //sorting table data
+  onSortChange(){
+    this.__sortDirection *=-1;
+    this.__dataSet.sort( (item1, item2)=>{
+      let _retVal=1;
+      if (this.__sortDirection==1){
+        _retVal= item1.c1<item2.c1 ? 1:-1;
+      }else {
+        _retVal= item1.c1>item2.c1 ? 1:-1;
+      }
+      return _retVal;
+    });
+    this.__currentPage = 100;
+    this.__currentPage = 1;
+  }
+
+  onCellClick(_formID){
+    this.__router.navigate([_formID], {relativeTo: this.__route});
+  }
   //function to save save / save button click
   save(){
     var _url= (<any>AppConfig).httpCallPath+"/api/function";
@@ -69,4 +111,3 @@ export class SM_VD_FormCreatorComponent  implements OnInit {
   }
 
 }
-

@@ -1,6 +1,6 @@
 <div class="SM_VD_FormCreator animated fadeIn">
   <div class="row">
-      <div class="card col-sm-12">
+    <div class="card col-sm-12">
       <form >
         <div class="card-header">
           <strong>Create new Form</strong>
@@ -21,6 +21,52 @@
             <button (click)="save()" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Create</button>
         </div>
       </form>
-    </div>
-  </div><!--/.col-->
-</div><!--/.row-->
+    </div><!--/.col-->
+  </div><!--/.row-->
+  <div class="row">
+    <div class="card col-sm-12">
+      <form >
+        <div class="card-header">
+          <strong>Open Form</strong>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <label class="col-sm-12"> Select Form Name</label>
+          </div>
+          <div class ="row">
+            <div class="col-sm-12"> <nz-input nztype='text' class="col-sm-2" name="__searchFormName"
+              [(ngModel)]="__searchFormName" ></nz-input> 
+            </div>
+          </div>
+          <div class="row col-sm-12" >
+            <nz-table #nzTable
+              [nzDataSource]="__dataSet"
+              [nzShowSizeChanger]="true"
+              [nzLoading]="__loading"
+              [nzTotal]="__totalRecords"
+              [(nzPageIndex)]="__currentPage"
+              (nzPageIndexChange)="refreshData()"
+              [(nzPageSize)]="__pageSize"
+              (nzPageSizeChange)="refreshData(true)">
+              <thead nz-thead class="col-sm-12">
+                <tr>
+                  <th nz-th nzWidth="200%"><span>Form name</span><nz-table-sort (nzValueChange)="onSortChange('FormName',$event)"></nz-table-sort></th>
+                  <th nz-th style="display:none"><span>ID</span></th>             
+                </tr>
+              </thead>
+              <tbody nz-tbody>
+                <tr nz-tbody-tr *ngFor="let data of nzTable.data" >
+                  <td (click)="onCellClick(data.c0)"
+                    style="text-align:left; padding-left:1%">{{data.c1}}</td>
+                  <td nz-td style="display:none" >{{data.c0}}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+      </form>
+    </div><!--/.col-->
+  </div><!--/.row-->
+</div>
+
+

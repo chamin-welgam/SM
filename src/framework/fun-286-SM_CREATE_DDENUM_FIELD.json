@@ -59,6 +59,12 @@
                     {
                         "para_nm":"F_GRP_NM",
                         "para_value":"\"SM_DDENUM_\"+@_ID"
+                    },{
+                        "para_nm":"F_IS_SYSTEM_RECORD",
+                        "para_value":"false"
+                    },{
+                        "para_nm":"F_SHOW_TO_USERS",
+                        "para_value":"true"
                     }
                 ],
                 "return_value_variable":"_GRPID"

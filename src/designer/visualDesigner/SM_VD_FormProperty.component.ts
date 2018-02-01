@@ -9,6 +9,7 @@ import {
 import {Router, ActivatedRoute} from '@angular/router';
 import { HttpClient, HttpParams} from '@angular/common/http';
 import * as  AppConfig from  '../../app/configuration/config.json';
+import { SM_webUtilities } from '../../webUtilities/SM_webUtilities' 
 import { now } from 'moment';
 
 @Component({
@@ -27,6 +28,7 @@ export class SM_VD_FormPropertyComponent  implements OnInit {
   __formName="";
   __title="";
   __el: HTMLElement;
+  __SMWU = new SM_webUtilities(this.__http);
   
   constructor(private el: ElementRef,   private __http: HttpClient,
               private __router: Router, private __activatedRouter: ActivatedRoute) {
@@ -35,24 +37,28 @@ export class SM_VD_FormPropertyComponent  implements OnInit {
 
   ngOnInit() {
     this.__activatedRouter.params.subscribe(_param => {
-      this.__formNo=_param['formNo'];
+      this.__formNo=_param['id'];
       this.initForm(); 
     });
-    this.newFormData();
   }
 
   //functions for initializing lists 
 
   //function to initialize form
   initForm(){
+    var _data={
+      FORM_NO:this.__formNo
+    }
+    this.__SMWU.callAPIFunction(264, _data, onReceiveData.bind(this));
 
-  }
-  //function to create new  
-  newFormData(){
-  }
-
-  //function to save save / save button click
-  save(){
+    function onReceiveData(_data2){
+      if(_data2.status=='OK'){
+        this.__formName=_data2.rows[0].c1;
+        this.__title=_data2.rows[0].c2;
+      }else{ //error //todo
+        alert("Error \nwhile getting data \nfrom server.");
+      }  
+    }
   }
 
   nameChanged(){
@@ -62,27 +68,26 @@ export class SM_VD_FormPropertyComponent  implements OnInit {
   titelChanged(){
     this.UpdateProperty("F_TITLE", this.__title);
   }
+  
   //functions during the web activities
   UpdateProperty(_fieldName , _newValue){
     var _url= (<any>AppConfig).httpCallPath+"/api/function";
     var _funNo=253;
     var _data={
         FORM_NO: this.__formNo,
-        FIELD_NAME:_fieldName,
+        FIELD_NAME: _fieldName,
         NEW_VALUE: _newValue
       };
-      
-    var _params = new HttpParams()
-      .append('funNo', `${_funNo}`)
-      .append('data', `${JSON.stringify(_data)}`);
-    this.__http.get(`${_url}`,{params: _params}).subscribe((data : any) => {
-      if(data.status=='OK'){
+    this.__SMWU.callAPIFunction(_funNo,_data,onReceiveData.bind(this));
+
+    function onReceiveData(_data2){
+      if(_data2.status=='OK'){
         var x = document.getElementById("__SM_msg");
         x.style.display = "block";
-       }else{ //error //todo
+      }else{ //error //todo
         alert("Error \nwhile getting data \nfrom server.");
       }  
-    });  
+    }  
   }
 
 }

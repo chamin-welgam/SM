@@ -22,9 +22,6 @@ export const routes: Routes = [
         path: 'frontend-form',
         loadChildren: './frontend/SM_Frontend.module#SM_FrontendModule'        
       },{
-        path: 'master-data',
-        loadChildren: './master-data/masterData.module#masterDataModule'
-      },{
         path: 'dashboard',
         loadChildren: './dashboard/dashboard.module#DashboardModule'
       },

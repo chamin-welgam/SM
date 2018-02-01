@@ -38,12 +38,15 @@ export class SM_VD_FormDesignerComponent  implements OnInit {
   constructor(private el: ElementRef, private __http: HttpClient, private __activatedRoute: ActivatedRoute ,
               private __router :Router) {
     this.__el = this.el.nativeElement;
-    this.__formNo= this.__activatedRoute.params.value.id;
+    this.__activatedRoute.params.subscribe(params=>{
+      this.__formNo= params['id'];
+      this.initForm();
+    }); 
   }
 
   ngOnInit() {
     console.log(this.__router);
-    this.initForm();
+//    this.initForm();
   }
 
   //functions for initializing lists 
@@ -59,10 +62,10 @@ export class SM_VD_FormDesignerComponent  implements OnInit {
     var _SP_SM_GET_FORM_FIELDS = 260
     this.callFunction(_SP_SM_GET_FORM_FIELDS,_data, getFields.bind(this))
 
-    function getFields(_data) 
+    function getFields(_data1) 
     {
-      if(_data.status=='OK'){
-        _data.rows.forEach(_row => {
+      if(_data1.status=='OK'){
+        _data1.rows.forEach(_row => {
           if(_row.c2== this.TEXT_CONTROL){
             this.addTextFieldToScreen(_row);
           } else if(_row.c2== this.NUMBER_CONTROL){
@@ -75,12 +78,24 @@ export class SM_VD_FormDesignerComponent  implements OnInit {
             this.addDDReferenceFieldToScreen(_row);
           }       
         });
+        var _data2={
+          FORM_NO:this.__formNo
+        }
+        this.callFunction(264,_data2,getFormTitle.bind(this))
       }else{ //error //todo
         alert("Error \nwhile creating  control");
       }  
     }
-  }
 
+    function getFormTitle(_data3) 
+    {
+      if(_data3.status=='OK'){
+        this.__title = _data3.rows[0].c2;
+      } else{ //error //todo
+        alert("Error \nwhile creating  control");
+      }  
+    }
+  }
   addTextFieldToScreen(_data, _select){
     var newEle =  document.createElement("div");
     newEle.innerText = _data.c3;

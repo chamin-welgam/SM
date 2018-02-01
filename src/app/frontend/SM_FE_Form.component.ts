@@ -12,6 +12,13 @@ import * as  AppConfig from  '../../app/configuration/config.json';
 import { now } from 'moment';
 import {SM_webUtilities} from '../../webUtilities/SM_webUtilities';
 
+//import consts
+import * as form_controls from "../../framework/SM_CONST_form_controls"
+import {DD_REFERENCE_CONTROL} from "../../framework/SM_CONST_form_controls"
+import {DDENUM_CONTROL} from "../../framework/SM_CONST_form_controls"
+import {NUMBER_CONTROL} from "../../framework/SM_CONST_form_controls"
+import {TEXT_CONTROL} from "../../framework/SM_CONST_form_controls"
+
 @Component({
   selector : 'SM_FE_Form',   
   templateUrl: 'SM_FE_Form.component.html',
@@ -23,20 +30,27 @@ import {SM_webUtilities} from '../../webUtilities/SM_webUtilities';
 })
 
 export class SM_FE_Form  implements OnInit {
-  TEXT_CONTROL=3824;
-  NUMBER_CONTROL=3825;
-  DATE_CONTROL=3826;
-  DD_REFERENCE_CONTROL=3828;
-  DDENUM_CONTROL=3829;
+  RECORD_NEW=1;
+  RECORD_VIEW=2;
+  RECORD_EDIT=3;
+
+  DATE_CONTROL= form_controls.DATE_CONTROL;
+  DD_REFERENCE_CONTROL=form_controls.DD_REFERENCE_CONTROL;
+  DDENUM_CONTROL=form_controls.DDENUM_CONTROL;
+  NUMBER_CONTROL=form_controls.NUMBER_CONTROL;
+  TEXT_CONTROL=form_controls.TEXT_CONTROL;
+
   //variables
-  __formNo=31;
+  __formNo=0;
   __formName="";
   __formTitle="";
-  __title="";
+  __insertRecordFun=0;
+  __updateRecordFun=0;
+
   __fields=[];
   __el: HTMLElement;
   __SM_webUtilities= new SM_webUtilities(this.__http);
-
+  __currentRecordMode=this.RECORD_NEW; 
   __data={};
   
   constructor(private el: ElementRef, private __http: HttpClient, private __activatedRoute: ActivatedRoute ,
@@ -84,6 +98,12 @@ export class SM_FE_Form  implements OnInit {
       if(_data2.status=='OK'){
         this.__formName=_data2.rows[0].c1;
         this.__formTitle=_data2.rows[0].c2;
+        this.__insertRecordFun=_data2.rows[0].c3;
+        //todo
+        //edit mode not yet introducde
+        //when introduced remove the remarks lines
+        // this.__updateRecordFun=_datas.rows[0].c4;
+
       }else{ //error //todo
         alert("Error \nwhile getting data \nfrom server.");
       }  
@@ -96,14 +116,18 @@ export class SM_FE_Form  implements OnInit {
 
   //function to save save / save button click
   save(){
+    if(this.__currentRecordMode==this.RECORD_VIEW) {
+      alert("Not on EDIT mode");
+      return;
+    }
     var _data={
       F_FORM_NO: this.__formNo
     };
     for (var _dt in this.__data) {
       _data[_dt]=this.__data[_dt];   //CREAte variables to hold form data
     };
-    var _SaveFunNumber = 175;
-    this.callFunction(_SaveFunNumber ,_data, this.onSaveComplete.bind(this))
+    var _saveFunction = this.__currentRecordMode==this.RECORD_NEW? this.__insertRecordFun: this.__updateRecordFun;
+    this.callFunction(_saveFunction ,_data, this.onSaveComplete.bind(this))
   }
 
   onSaveComplete(_data){

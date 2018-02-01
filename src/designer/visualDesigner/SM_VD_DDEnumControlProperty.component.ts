@@ -99,6 +99,7 @@ export class SM_VD_DDEnumControlPropertyComponent  implements OnInit {
   }
   __F_DISPLAY_NAME_Changed(){
     this.UpdateProperty(null,this.__F_DISPLAY_NAME);
+    
   }
   __F_ALLOW_NULL_Changed(){
     this.UpdateProperty(null,null,this.__F_ALLOW_NULL);

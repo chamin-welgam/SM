@@ -49,27 +49,6 @@
             "command_type": "javascript",
             "script":  ["@_ID=@_ID.rows[0].c0;"]
         },{   
-            "description":"calling SP_SM_INS_ENUM_GROUP function number =287",
-            "command_type": "call_a_function_and_get_return_value",
-            "command_options":
-            {
-                "fun_no": 287,
-                "parameters":
-                [
-                    {
-                        "para_nm":"F_GRP_NM",
-                        "para_value":"\"SM_DDENUM_\"+@_ID"
-                    },{
-                        "para_nm":"F_IS_SYSTEM_RECORD",
-                        "para_value":"false"
-                    },{
-                        "para_nm":"F_SHOW_TO_USERS",
-                        "para_value":"true"
-                    }
-                ],
-                "return_value_variable":"_GRPID"
-            }
-        },{   
             "description":"calling SP_SM_INS_DDENUM_FIELD function number =283",
             "command_type": "call_a_function_and_get_return_value",
             "command_options":
@@ -82,10 +61,10 @@
                         "para_value":"@_ID"                    
                     },{
                         "para_nm":"F_ENUM_GROUPID",
-                        "para_value":"@_GRPID.rows[0].c0"
+                        "para_value":"122"
                     },{
                         "para_nm":"F_ALLOW_TO_ADD",
-                        "para_value":"1"
+                        "para_value":"0"
                     }
                 ],
                 "return_value_variable":"_v1"

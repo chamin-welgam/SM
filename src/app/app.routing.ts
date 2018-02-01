@@ -26,14 +26,6 @@ export const routes: Routes = [
         loadChildren: './dashboard/dashboard.module#DashboardModule'
       },
       {
-        path: 'accounting',
-        loadChildren: './accounting/accounting.module#AccountingModule'
-      },
-      {
-        path: 'sales',
-        loadChildren: './sales/sales.module#salesModule'
-      },
-      {
         path: 'designer',
         loadChildren: '../designer/visualDesigner/SM_VisualDesignerModule.module#SM_VisualDesignerModule'
       },

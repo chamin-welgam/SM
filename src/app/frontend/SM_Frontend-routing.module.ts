@@ -16,7 +16,7 @@ import { SM_FE_Form } from './SM_FE_Form.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':ID',
     component: SM_FE_Form
   }
 ];
